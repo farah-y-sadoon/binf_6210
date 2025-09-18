@@ -44,7 +44,7 @@ my.vector
 
 #RStudio helps with finding errors. Try leaving out the closing parenthesis and see what happens.
 #Uncomment (i.e. remove the #) and try the below
-y <- c(1:10
+y <- c(1:10) #added comma here because it was missing! Rest of the code shows that I am missing a bracket if I do not resolve this issue.
 
 #See the red symbol that appears to the left? pretty helpful. What was missing? Yes, the closing parenthesis.
 y <- c(1:10)
@@ -215,9 +215,13 @@ length(ponds)
 
 #Tip: When sampling or generating random numbers, if you want your script to be completely reproducible, you can use set.seed() first. First, try generating several sets of samples without doing that. Then, try set.seed() and do it again.
 
+ponds_2 <- sample(x = 300, size = 23)
+ponds_2
+
 set.seed(45)
 ponds_2 <- sample(x = 1:200, size = 40)
 ponds_2
+
 
 #See V2 for example answers.
 
@@ -230,18 +234,61 @@ who_gets_a_cookie
 
 #Example #3 (hardest). Imagine you have collected Trichoptera (caddisflies) larvae from your ponds. Caddisflies are important organisms for biomonitoring of freshwater quality and ecosytem health, due to their sensitivity to pollution. From each pond, you collected 100 caddisflies, which you will number 1 through 100. From each of your 40 ponds, you will randomly choose 30 of the 100 caddisflies for DNA sequencing. You can build up to this by doing the different components in different steps, but then also try to do this in ONE line of code. Tip: check out the function replicate(). Tip: Note that you can nest functions inside other functions. See examples at the bottom of documentation.
 
+#My multi-step answer:
+ponds <- (1:40)
+
+for (i in ponds) {
+  fly_seq <- sample(x = 100, size = 30, replace = FALSE)
+  print(fly_seq)
+}
+
+#Answer with replicate(): 
+options(max.print = 4000)
+replicate(40, sample(x = 100, size = 30, replace = FALSE))
+
 #See V2 for example answer
 
+# creating Objects as arguments for the list function
+a = c(1, 2, 3, 4, 5)
+b = c("A", "B", "C", "D", "E")
+c = c("A", "B", "c", "1", "2")
+
+# implementing the list() function 
+list(a, b, c)
+
+?list()
+
 #Check out class and dimensions of that object.
-class(to.barcode)
-dim(to.barcode)
-max(to.barcode)
-min(to.barcode)
-mean(to.barcode)
+class(a)
+dim(a)
+max(a)
+min(a)
+mean(a)
 
 #TIP: See V2 for tips on using viewer.
 
 #Challenge #4 and friendly competition! Come up with as many (reasonable) ways as possible to solve example 3. In R, there are many ways to do the same thing! Sometimes, different solutions are a matter of personal preference. Sometimes, there are better and worse ways to do things (e.g. considering ease of reading the code and computational time).
+
+#1: for loop
+ponds <- (1:40)
+
+for (i in ponds) {
+  fly_seq <- sample(x = 100, size = 30, replace = FALSE)
+  print(fly_seq)
+}
+
+#2: replicate()
+options(max.print = 4000)
+replicate(40, sample(x = 100, size = 30, replace = FALSE))
+
+#3: while loop
+count <- 0
+while (count >= 0 & count < 40) {
+  count <- count + 1
+  fly_seq <- sample(x = 100, size = 30, replace = FALSE)
+  print(count)
+  print(fly_seq)
+}
 
 #I will put example answers to challenge #4 in a separate script, so that this script doesn't get too long. Everyone: Feel free to have a look once you are comfortable with this script.
 
@@ -281,7 +328,11 @@ vect.mixed[c(1, 3)]
 
 listA <- list(1, 45, 3, 5, 9)
 listA #How do the data look on the screen compared to a vector?
+#it shoes you the order of the values / index of the list
 class(listA) #What do you notice? what class of data object is returned?
+#list is it's own data object, whereas vectors hold elements of the same object class.
+# Q: DOES THIS MEAN THAT VECTORS CAN HOLD LISTS? <- NO BECAUSE THEY CAN ONLY HOLD ATOMIC ELEMENTS
+
 
 #What does the function list do?
 ?list()
@@ -306,6 +357,7 @@ groups1
 class(groups1)
 
 #Think: In this case, would we want to sample with or without replacement? See V2 for answer.
+#without, because you don't want to add the same people to multiple groups
 
 #Reminder about viewing the help.
 ?matrix
@@ -316,9 +368,10 @@ groups2
 
 #Why CAN'T we do below? i.e. Why can't we use c() rather than list()? What does c() do? Would it preserve the dimensions? Try this. Note we are expecting an error so that you can see what happens. So, uncomment and try to run the below.
 
-#groups2 <- matrix(sample(students), nrow = 5, dimnames = c(c("group.Awesome", "group.Brave", "group.Clever", "group.Diligent", "group.Enthusiastic"), c("Col1", "Col2", "Col3", "Col4")))
+groups2 <- matrix(sample(students), nrow = 5, dimnames = c(c("group.Awesome", "group.Brave", "group.Clever", "group.Diligent", "group.Enthusiastic"), c("Col1", "Col2", "Col3", "Col4")))
 
 #Try to explain why we can't do this. WHY do we get an error? Would we want all of our column and row names in one vector?
+#c() creates a vector, whereas list() creates a list (that can hold multiple dimensions, like both the names of the rows and the columns). We want both the column and row names in one vector so that we can translate this list back into a matrix if needed, and reproduce our work.
 
 #To follow the above code, read from the inside out. Start with the most nested set of parentheses. The function c(), or concatenate, is used to create two vectors, one for row names and one for column names. The function c() is a "generic function which combines its arguments" (from the help). "The default method combines its arguments to form a vector" (from the help). These vectors are then combined into a list object using the function list(). The list contains two elements, each of which is a vector (one for row names and one for column names). So, we need to use list(). 
 
@@ -380,17 +433,22 @@ class(df$Level)
 class(df$No.Students)
 
 #What is the class of each of the variables in our dataframe df?
+#Level is a factor
+#No.Students is numeric
 
 #Parting note: ls() is very different from list()
 ls()
 #What does this do?
+#ls() lists all the values in the environment
 ?ls()
+
+
 
 #This was a brief overview... We will work with dataframes much more and become comfortable with them over the next few classes.
 
 
 #Before next class, please install needed packages.
 #If you don't have the below packages, you would uncomment (i.e. remove the # symbol) and run the following lines
-#install.packages("tidyverse")
-#install.packages("vegan")
-#install.packages("iNEXT")
+install.packages("tidyverse")
+install.packages("vegan")
+install.packages("iNEXT")
