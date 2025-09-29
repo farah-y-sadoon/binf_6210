@@ -14,6 +14,7 @@ library(viridis)
 #+ scale_color/fill_viridis(discrete = T/F)
 theme_set(theme_light())
 
+
 # Startup ends here
 
 #V1 - includes coding challenges at the bottom. See V2 for example answers.
