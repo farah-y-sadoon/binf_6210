@@ -11,7 +11,7 @@
 library(stats)
 library(tidyverse)
 library(viridis)
-# + scale_color/fill_viridis(discrete = T/F)
+#+ scale_color/fill_viridis(discrete = T/F)
 theme_set(theme_light())
 
 # Startup ends here
@@ -46,7 +46,7 @@ library(tidyverse)
 
 #It is important for your methods to record how and when you obtained data. I ran the below line on Sept 24, 2021. You should include such information about data acquisition in your reports. Here, we are accessing publicly available data from BOLD.
 
-#Daphnia <- read_tsv("http://www.boldsystems.org/index.php/API_Public/combined?taxon=Daphnia&format=tsv")
+Daphnia <- read_tsv("http://www.boldsystems.org/index.php/API_Public/combined?taxon=Daphnia&format=tsv")
 
 #Next, we can set the working directory.
 

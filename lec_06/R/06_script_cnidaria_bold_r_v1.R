@@ -129,7 +129,6 @@ getwd()
 df_bold <- read_tsv(file = "../data/06_data_cnidaria_bold.tsv")
 df_bold
 
-
 #We should see our data frame coming up in the global environment. There are 21094 observations (rows) and 80 variables (columns). You can click on that object name in the environment pane to bring it up and view it. Each row contains information about an individual specimen.
 
 #We can see the variable names using the names() function:
