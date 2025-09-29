@@ -9,6 +9,9 @@ library(stringr)
 
 # Use BOLD API to extract data
   df_anura <- read_tsv("http://www.boldsystems.org/index.php/API_Public/combined?taxon=Anura&format=tsv")
+  write_tsv(df_anura, "../data/df_anura.tsv")
+  
+  getwd()
 
 #_Inspect Data --------
   
@@ -21,6 +24,9 @@ library(stringr)
   
   # Create a subset of the data for columns of interest
   df_anura2 <- df_anura[, c(1, 8, 14, 16, 20, 22, 47, 48, 55, 56, 57, 72)]
+  write_tsv(df_anura2, "../data/df_anura2.tsv")
+  
+
   
   # Display the number of records that exists for qualitative columnS
   View(df_anura2 %>% count(bin_uri, sort = TRUE))
