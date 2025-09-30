@@ -28,7 +28,7 @@ library(stringr)
   
 
   
-  # Display the number of records that exists for qualitative columnS
+  # Display the number of records that exists for qualitative columns
   View(df_anura2 %>% count(bin_uri, sort = TRUE))
   View(df_anura2 %>% count(order_name, sort = TRUE)) # make sure only the order of interest is reported here, otherwise remove in cleaning steps
   View(df_anura2 %>% count(family_name, sort = TRUE))
