@@ -216,6 +216,7 @@ dfBINs.spread <- pivot_wider(data = dfCount.by.BIN, names_from  = bin_uri, value
 ?rarecurve()
 
 x <- rarecurve(dfBINs.spread, xlab = "Individuals Barcoded", ylab = "BIN Richness")
+# if we sampled 500 individuals, we would see approximately 60 unique species (measured by BINs)
 
 #Have a look at the plot. You can click on "Zoom" if you want to get a better view.
 
@@ -320,6 +321,8 @@ rm(AccumCurve, dfBINs.by.country, dfBINs.by.country.na.rm, dfBINs.spread, dfBINs
 #See V2 of this script for example answers.
 
 #CHALLENGE #1: Start with the original data called dfBOLD. Create a subset as a new object, retaining only records found in the northern AND western hemispheres. Let's do this task based upon GPS coordinates only. We could also recover records that meet this criterion on the basis of country names, if we wanted to go further with a particular analysis, but that is beyond our intended scope here. Then, write lines of code to check that your solution works as intended.
+
+df_BOLD_north_west_hemis <- dfBOLD %>% 
 
 #CHALLENGE #2: Try to code the above task using both base R style and tidyverse style (using piping). Soon, you will see which you prefer and can choose just to use one. However, it is to your benefit to be able to read and understand code written in both styles.
 
