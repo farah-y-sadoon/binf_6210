@@ -144,66 +144,9 @@ library(countrycode)
   
   write_tsv(df_anura_cleaned, "../data/df_anura_cleaned")
   
-#_Data Analysis --------
-##_What is the relationship between anuran biodiversity and latitude? --------
-  
-  # Test for normality on independent variable (latitude)
-  
-  qqnorm(df_anura_cleaned$lat)
-  qqline(df_anura_cleaned$lat, col = "red")
-  
-  set.seed(123)
-  sample_lat <- sample(df_anura_cleaned$lat, 5000) # Shapiro test doesn't allow for a sample larger than 5000, so using sample
-  shapiro.test(sample_lat)
-
-  # Impute latitude band values with midpoint instead of categories for regression testing
-  # Extract median latitude from all of the latitude points
-  df_anura_lat_median <- df_anura_cleaned %>%
-    group_by(lat_band) %>%
-    summarize(lat_median = median(lat)) %>%
-    mutate(lat_median = lat_median)
-  
-  df_anura_analysis <- df_anura_cleaned %>% 
-    left_join(df_anura_lat_median, by = "lat_band")
-  
-  # Transform data from cleaned data frame into a matrix that iNEXT can take
-  
-  df_anura_analysis_counts <- df_anura_analysis %>% 
-    group_by(lat_median, bin_uri) %>%
-    count()
-  
-  # Pivot wider to make BINs column names and follow iNEXT formatting 
-  df_anura_analysis_counts_spread <- pivot_wider(data = df_anura_analysis_counts, names_from = bin_uri, values_from = n, values_fill = 0)
-  str(df_anura_analysis_counts_spread)
-  
-  # Label rows with median latitude because matrix has to ignore the latitude values
-  rownames(df_anura_analysis_counts_spread) <- df_anura_analysis_counts_spread$lat_median
-  
-  # Create a matrix for iNEXT that removes the "lat_median" label
-  mat_anura_abundance <- as.matrix(df_anura_analysis_counts_spread)
-  str(mat_anura_abundance)
-  mat_anura_abundance <- mat_anura_abundance[, -1]
-  str(mat_anura_abundance)
-  
-  # Compute richness per latitude band / median latitude
-  anura_iNEXT <- iNEXT(mat_anura_abundance, q = 0, datatype = "abundance")
-  #warnings() # warning for sites with only 1 species (not reliable)
-
-  asy_anura_abundance <- anura_iNEXT$AsyEst
-  
-  write_tsv(asy_anura_abundance, "../data/asy_anura_abundance.tsv")
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-  
+#_Data Exploration & Analysis --------
+##_How does biodiversity between tropical and temperate regions differ? --------
+  ####### PREVIOUS WORK
   # Spread the data
   df_bins_by_region <- df_anura_cleaned %>% 
     group_by(climate_region, bin_uri) %>% 
@@ -225,7 +168,7 @@ library(countrycode)
   rarefied_richness <- rarefy(df_bins_community_matrix, common_sample_size)
   
   df_rarefied_by_climate_region <- data.frame(region = climate_regions,
-    rarefied_richness = rarefied_richness)
+                                              rarefied_richness = rarefied_richness)
   
   count_projects <- df_anura_cleaned %>% 
     mutate(project_id = str_extract(processid, "^[A-Za-z]+")) %>% 
@@ -237,5 +180,86 @@ library(countrycode)
     summary(count(project_id))
   hist(count_projects$n, breaks = 50, main = "Samples per project", xlab = "Number of samples")
   
+##_What is the relationship between anuran biodiversity and latitude? --------
+  
+  # Test for normality on independent variable (latitude)
+  qqnorm(df_anura_cleaned$lat)
+  qqline(df_anura_cleaned$lat, col = "red")
+  
+  set.seed(123)
+  sample_lat <- sample(df_anura_cleaned$lat, 5000) # Shapiro test doesn't allow for a sample larger than 5000
+  shapiro.test(sample_lat) # Data is skewed, so cannot use mean as the value representing each latitude band
+  rm(sample_lat)
+
+  # Impute latitude band values with median instead of categories or mean for regression testing since latitude is skewed
+  # Extract median latitude from all of the latitude points
+  df_anura_lat_median <- df_anura_cleaned %>%
+    group_by(lat_band) %>%
+    summarize(lat_median = median(lat)) %>%
+    mutate(lat_median = lat_median)
+  
+  df_anura_analysis <- df_anura_cleaned %>% 
+    left_join(df_anura_lat_median, by = "lat_band")
+  rm(df_anura_lat_median)
+  
+  # Transform data from cleaned data frame into a matrix for further analysis
+  df_anura_analysis_counts <- df_anura_analysis %>% 
+    group_by(lat_median, bin_uri) %>%
+    count()
+  
+  # Pivot wider to make BINs column names
+  df_anura_analysis_counts_spread <- pivot_wider(data = df_anura_analysis_counts, names_from = bin_uri, values_from = n, values_fill = 0)
+  str(df_anura_analysis_counts_spread)
+  
+  # Label rows with median latitude because matrix has to ignore the latitude values
+  rownames(df_anura_analysis_counts_spread) <- df_anura_analysis_counts_spread$lat_median
+  
+  # Create a matrix that removes the "lat_median" label
+  mat_anura_abundance <- as.matrix(df_anura_analysis_counts_spread)
+  str(mat_anura_abundance)
+  mat_anura_abundance <- mat_anura_abundance[, -1]
+  str(mat_anura_abundance)
+  
+  rm(df_anura_analysis_counts_spread, df_anura_analysis_counts)
+  
+  # Plot rarefaction curves for each median lat point to determine sampling completeness
+  rarecurve(mat_anura_abundance,
+            main = "Rarefaction Curves",
+            label = FALSE)
+  
+  # Format labels to avoid overlap
+  sample_sums <- rowSums(mat_anura_abundance)
+  specimen_sums <- specnumber(mat_anura_abundance)
+
+  offsets <- seq(-4, 4, length.out = length(sample_sums))
+  
+  text(x = sample_sums + 50,
+       y = specimen_sums + offsets,
+       labels = rownames(mat_anura_abundance),
+       cex = 0.7,
+       col = "black",
+       xpd = TRUE)
+  
+  # Sampling not complete for some latitudes, therefore drop lowest site values and compute Hill numbers for each site 
+  # Drop bands that do not fall within the 25th percentile
+  site_totals <- rowSums(mat_anura_abundance)
+  common_size <- quantile(site_totals, 0.25)
+  
+  # Combine with site names (latitude medians)
+  df_site_totals <- data.frame(
+    lat_median = as.numeric(rownames(mat_anura_abundance)),
+    total_specimens = site_totals)
   
   
+  
+  
+  
+  
+  common_size <- quantile(site_totals, 0.25)
+  
+  
+  
+  
+  
+  
+
