@@ -1,0 +1,19 @@
+
+Call:
+lm(formula = estimated_richness ~ abs_lat, data = df_diversity_lat_analysis)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-462.39 -167.45  -74.59   70.87  887.05 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)   
+(Intercept)   995.74     270.34   3.683  0.00783 **
+abs_lat       -20.44      10.42  -1.961  0.09063 . 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 398.6 on 7 degrees of freedom
+Multiple R-squared:  0.3547,	Adjusted R-squared:  0.2625 
+F-statistic: 3.847 on 1 and 7 DF,  p-value: 0.09063
+
