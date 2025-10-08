@@ -1,4 +1,15 @@
-#_Setting up Libraries --------
+##***************************
+## BINF-6210
+##
+## Assignment 1: Analysis of Anuran Biodiversity Across Latitude Bands
+##
+## Farah Sadoon
+##
+## 2025-10-10
+##
+##***************************
+
+##_Setting up Libraries --------
 library(tidyverse)
 library(tidyr)
 library(dplyr)
@@ -9,8 +20,9 @@ library(ggplot2)
 library(vegan)
 library(iNEXT)
 library(countrycode)
+library(maps)
 
-#_Import Data --------
+##_Import Data --------
 
 # Use BOLD API to extract data
   #df_anura <- read_tsv("http://www.boldsystems.org/index.php/API_Public/combined?taxon=Anura&format=tsv")
@@ -18,7 +30,7 @@ library(countrycode)
   
   getwd()
 
-#_Inspect Data --------
+##_Inspect Data --------
   df_anura <- read_tsv("../data/df_anura.tsv")
   
   # Define objects and ensure they are as expected
@@ -59,7 +71,7 @@ library(countrycode)
   # Make sure columns are in the datatypes we need them
   str(df_anura2)
   
-#_Cleaning Data --------
+##_Clean Data --------
   
   # Filter fields create a new column for latitude bands
   # Check if there are any records at the equator exactly
@@ -138,53 +150,38 @@ library(countrycode)
   summary(df_anura_cleaned$lon) # longitude range still seems to cover the entire globe
   
   # Look at plotted coordinates to visualize the spread of data
-  ggplot(df_anura_cleaned, aes(x = lon, y = lat, colour = lat_band)) +
-    geom_point(alpha = 0.1) +
-    coord_fixed()
+  world <- map_data("world") # from maps() package
+
+  (fig_distribution_specimen <- ggplot() +
+    # Create world map outline
+    geom_polygon(data = world, aes(x = long, y = lat, group = group),
+                 fill = "gray100", color = "gray80") +
+    # plot data points onto the map
+    geom_point(data = df_anura_cleaned,
+               aes(x = lon, y = lat, colour = lat_band),
+               alpha = 0.6, size = 1) +
+    coord_fixed(1.3) +   # this ratio of 1.3 to 1 lat to lon to make the map look less stretched out
+    labs(title = "Distribution of Anura Specimens Collected",
+         x = "Longitude", y = "Latitude", colour = "Latitude Band") +
+    theme_minimal())
+
+  ggsave("../figs/01_fig_distribution_of_anura_specimen.png", plot = fig_distribution_specimen , width = 12, height = 9, dpi = 800)
   
-  write_tsv(df_anura_cleaned, "../data/df_anura_cleaned")
+  rm(world, fig_distribution_specimen)
   
-#_Data Exploration & Analysis --------
-##_How does biodiversity between tropical and temperate regions differ? --------
-  ####### PREVIOUS WORK
-  # Spread the data
-  df_bins_by_region <- df_anura_cleaned %>% 
-    group_by(climate_region, bin_uri) %>% 
-    count()
+  write_tsv(df_anura_cleaned, "../data/df_anura_cleaned.tsv")
   
-  df_bins_by_region_spread <- pivot_wider(data = df_bins_by_region, names_from = bin_uri, values_from = n, values_fill = 0)
-  
-  # Calculate the common sample size
-  df_count_climate_region <- df_anura_cleaned %>% 
-    count(climate_region)
-  
-  common_sample_size <- min(df_count_climate_region$n)
-  
-  # Create community matrix
-  df_bins_community_matrix <- df_bins_by_region_spread[,-1] #removes region column
-  
-  # Calculate the number of observed species at the common sample size
-  climate_regions <- df_bins_by_region_spread$climate_region # store this for combining with rarified richness data
-  rarefied_richness <- rarefy(df_bins_community_matrix, common_sample_size)
-  
-  df_rarefied_by_climate_region <- data.frame(region = climate_regions,
-                                              rarefied_richness = rarefied_richness)
-  
-  count_projects <- df_anura_cleaned %>% 
-    mutate(project_id = str_extract(processid, "^[A-Za-z]+")) %>% 
-    count(project_id)
-  
-  
-  count_projects %>% 
-    count(project_id) %>% 
-    summary(count(project_id))
-  hist(count_projects$n, breaks = 50, main = "Samples per project", xlab = "Number of samples")
-  
-##_What is the relationship between anuran biodiversity and latitude? --------
-  
+##_Data Exploration & Analysis -------- 
+# What is the relationship between anuran biodiversity and latitude?
   # Test for normality on independent variable (latitude)
+  
+  # Save figure (since not ggplot, need to use base R way to save figure)
+  png("../figs/02_fig_qqplot_lat.png", width = 1200, height = 800, res = 200)
+  
   qqnorm(df_anura_cleaned$lat)
   qqline(df_anura_cleaned$lat, col = "red")
+
+  dev.off()
   
   set.seed(123)
   sample_lat <- sample(df_anura_cleaned$lat, 5000) # Shapiro test doesn't allow for a sample larger than 5000
@@ -201,6 +198,8 @@ library(countrycode)
   df_anura_analysis <- df_anura_cleaned %>% 
     left_join(df_anura_lat_median, by = "lat_band")
   rm(df_anura_lat_median)
+  
+  write_tsv(df_anura_analysis, "../data/df_anura_analysis.tsv")
   
   # Transform data from cleaned data frame into a matrix for further analysis
   df_anura_analysis_counts <- df_anura_analysis %>% 
@@ -222,17 +221,21 @@ library(countrycode)
   
   rm(df_anura_analysis_counts_spread, df_anura_analysis_counts)
   
+  # Write matrix to a table and specify parameters for delimeters and row/col names
+  write.table(mat_anura_abundance, file = "../data/mat_anura_abundance.tsv",
+              sep = "\t",
+              row.names = TRUE,    
+              col.names = TRUE)
+  
   # Plot rarefaction curves for each median lat point to determine sampling completeness
+  png("../figs/03_fig_rarecurves.png", width = 1200, height = 800, res = 400)
   rarecurve(mat_anura_abundance,
             main = "Rarefaction Curves",
             label = FALSE)
-  
   # Format labels to avoid overlap
   sample_sums <- rowSums(mat_anura_abundance)
   specimen_sums <- specnumber(mat_anura_abundance)
-
   offsets <- seq(-4, 4, length.out = length(sample_sums))
-  
   text(x = sample_sums + 50,
        y = specimen_sums + offsets,
        labels = rownames(mat_anura_abundance),
@@ -240,26 +243,70 @@ library(countrycode)
        col = "black",
        xpd = TRUE)
   
-  # Sampling not complete for some latitudes, therefore drop lowest site values and compute Hill numbers for each site 
+  dev.off()
+  rm(sample_sums, specimen_sums, offsets)
+  
+  # Sampling not complete for some latitudes, drop lowest site values and compute Hill numbers for each site 
   # Drop bands that do not fall within the 25th percentile
   site_totals <- rowSums(mat_anura_abundance)
-  common_size <- quantile(site_totals, 0.25)
+  lat_cutoff <- quantile(site_totals, 0.25)
+  keep_sites <- site_totals >= lat_cutoff
+  mat_anura_filtered <- mat_anura_abundance[keep_sites, ]
   
-  # Combine with site names (latitude medians)
-  df_site_totals <- data.frame(
-    lat_median = as.numeric(rownames(mat_anura_abundance)),
-    total_specimens = site_totals)
+  rm(site_totals, lat_cutoff, keep_sites)
   
-  
-  
-  
-  
-  
-  common_size <- quantile(site_totals, 0.25)
-  
-  
-  
-  
-  
-  
+  write.table(mat_anura_filtered, file = "../data/mat_anura_filtered.tsv",
+              sep = "\t",
+              row.names = TRUE,    
+              col.names = TRUE)
 
+  # Compare matrices before and after 
+  dim(mat_anura_abundance)
+  dim(mat_anura_filtered)
+  
+  # Split the matrix into lists where each list represents one latitude site and contains  
+  mat_list <- split(mat_anura_filtered, rownames(mat_anura_filtered))
+  mat_list <- lapply(mat_list, as.numeric) # make each vector numeric
+  
+  # Use iNEXT to calculate diversity indices
+  diversity_lat <- iNEXT(mat_list, q = c(0,1,2), datatype = "abundance")
+  class(diversity_lat$AsyEst)
+  
+  rm(mat_list)
+  
+  # Extract Asymptotic species richness from diversity_lat and create data frame for regression analysis
+  df_diversity_lat_analysis <- as_tibble(diversity_lat$AsyEst) %>% 
+    filter(Diversity == "Species richness") %>% 
+    dplyr::rename(latitude = "Assemblage", observed = "Observed", estimated_richness = "Estimator", 
+                  standard_error = "s.e.", lcl = "LCL", ucl = "UCL") %>%
+    select(-Diversity) %>% 
+    mutate(latitude = as.numeric(latitude)) %>%
+    mutate(abs_lat = abs(latitude)) # Use absolute latitude for linear model
+  
+  rm(diversity_lat)
+  
+  write_tsv(df_diversity_lat_analysis, "../data/df_diversity_lat_analysis.tsv")
+  
+  ###_Statistical Testing ----
+  # Run linear regression to determine relationship between latitude and estimated asymptotic anura diversity
+  lm_diversity_lat <- lm(estimated_richness ~ abs_lat, data = df_diversity_lat_analysis)
+  summary(lm_diversity_lat)
+  
+  # Save output to a text file in output folder
+  capture.output(summary(lm_diversity_lat), file = "../output/01_output_lm_diversity_lat.txt")
+  
+  rm(lm_diversity_lat)
+  
+  # Plot regression 
+  fig_linear_regression_diversity_lat <- ggplot(df_diversity_lat_analysis, aes(x = abs_lat, y = estimated_richness)) + 
+    geom_point() + 
+    geom_smooth(method = "lm", color = "red") + 
+    labs(x = "Distance from the Equator (°)", y = "Estimated Species Richness", 
+         title = "Estimated Asymptotic Anuran Richness vs Absolute Latitude") + 
+    theme_minimal() + 
+    theme(panel.grid = element_blank())
+  fig_linear_regression_diversity_lat
+  
+  ggsave("../figs/04_fig_linear_regression_diversity_lat.png", plot = fig_linear_regression_diversity_lat , width = 12, height = 9, dpi = 800)
+  
+  rm(list = ls())
