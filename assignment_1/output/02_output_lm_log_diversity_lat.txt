@@ -1,0 +1,20 @@
+
+Call:
+lm(formula = log(df_diversity_lat_analysis$estimated_richness) ~ 
+    df_diversity_lat_analysis$latitude, data = df_diversity_lat_analysis)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.1806 -0.2691 -0.1417  0.4759  1.1183 
+
+Coefficients:
+                                   Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                         6.04990    0.26455  22.869 7.75e-08 ***
+df_diversity_lat_analysis$latitude -0.01198    0.01020  -1.175    0.279    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.7774 on 7 degrees of freedom
+Multiple R-squared:  0.1647,	Adjusted R-squared:  0.04535 
+F-statistic:  1.38 on 1 and 7 DF,  p-value: 0.2785
+
