@@ -311,12 +311,10 @@ library(maps)
     geom_smooth(method = "lm", color = "red") + 
     labs(x = "Distance from the Equator (°)", y = "Log(Estimated Species Richness)", 
          title = "Log Linear Model: Estimated Asymptotic Anuran Richness vs Absolute Latitude") + 
-    theme_minimal() + 
-    theme(panel.grid = element_blank())
-
+    theme_minimal()
   fig_log_linear_regression_diversity_lat
   
-  ggsave("../figs/03_fig_log_linear_regression_diversity_lat.png", plot = fig_log_linear_regression_diversity_lat , width = 12, height = 9, dpi = 800)
+  ggsave("../figs/03_fig_log_linear_regression_diversity_lat.png", plot = fig_log_linear_regression_diversity_lat , width = 16, height = 9, dpi = 800)
   
   rm(list = ls())
   
