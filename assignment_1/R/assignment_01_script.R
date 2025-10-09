@@ -174,15 +174,9 @@ library(maps)
 ##_Data Exploration & Analysis -------- 
 # What is the relationship between anuran biodiversity and latitude?
   # Test for normality on independent variable (latitude)
-  
-  # Save figure (since not ggplot, need to use base R way to save figure)
-  png("../figs/02_fig_qqplot_lat.png", width = 1200, height = 800, res = 200)
-  
   qqnorm(df_anura_cleaned$lat)
   qqline(df_anura_cleaned$lat, col = "red")
 
-  dev.off()
-  
   set.seed(123)
   sample_lat <- sample(df_anura_cleaned$lat, 5000) # Shapiro test doesn't allow for a sample larger than 5000
   shapiro.test(sample_lat) # Data is skewed, so cannot use mean as the value representing each latitude band
@@ -228,15 +222,15 @@ library(maps)
               col.names = TRUE)
   
   # Plot rarefaction curves for each median lat point to determine sampling completeness
-  png("../figs/03_fig_rarecurves.png", width = 1200, height = 800, res = 400)
+  png("../figs/02_fig_rarecurves.png", width = 3600, height = 2400, res = 300)
   rarecurve(mat_anura_abundance,
-            main = "Rarefaction Curves",
+            main = "Rarefaction Curves at Different Latitudes",
             label = FALSE)
   # Format labels to avoid overlap
   sample_sums <- rowSums(mat_anura_abundance)
   specimen_sums <- specnumber(mat_anura_abundance)
-  offsets <- seq(-4, 4, length.out = length(sample_sums))
-  text(x = sample_sums + 50,
+  offsets <- seq(-4, 5, length.out = length(sample_sums))
+  text(x = sample_sums + 65,
        y = specimen_sums + offsets,
        labels = rownames(mat_anura_abundance),
        cex = 0.7,
@@ -244,6 +238,7 @@ library(maps)
        xpd = TRUE)
   
   dev.off()
+  
   rm(sample_sums, specimen_sums, offsets)
   
   # Sampling not complete for some latitudes, drop lowest site values and compute Hill numbers for each site 
@@ -288,25 +283,41 @@ library(maps)
   write_tsv(df_diversity_lat_analysis, "../data/df_diversity_lat_analysis.tsv")
   
   ###_Statistical Testing ----
+
   # Run linear regression to determine relationship between latitude and estimated asymptotic anura diversity
   lm_diversity_lat <- lm(estimated_richness ~ abs_lat, data = df_diversity_lat_analysis)
   summary(lm_diversity_lat)
   
+  # Assess residuals of the linear model 
+  plot(lm_diversity_lat, which = 1) # Residuals of the model are not evenly distributed
+  shapiro.test(residuals(lm_diversity_lat)) # Residuals of the model are not normally distributed 
+  
+  # Log transform dependent variable to adjust for non-normal and skewed residuals
+  lm_log_diversity_lat <- lm(log(df_diversity_lat_analysis$estimated_richness) ~ df_diversity_lat_analysis$latitude, data = df_diversity_lat_analysis)
+  summary(lm_log_diversity_lat)
+  
+  plot(lm_log_diversity_lat, which = 1) # Better homoscedasticity 
+  shapiro.test(residuals(lm_log_diversity_lat)) # p > 0.05, this does not violate normal distribution
+  
   # Save output to a text file in output folder
   capture.output(summary(lm_diversity_lat), file = "../output/01_output_lm_diversity_lat.txt")
+  capture.output(summary(lm_log_diversity_lat, file = "../output/02_output_lm_log_diversity_lat.txt"))
   
-  rm(lm_diversity_lat)
+  rm(lm_diversity_lat,lm_log_diversity_lat)
   
-  # Plot regression 
-  fig_linear_regression_diversity_lat <- ggplot(df_diversity_lat_analysis, aes(x = abs_lat, y = estimated_richness)) + 
+  # Plot log transformed linear regression 
+  fig_log_linear_regression_diversity_lat <- ggplot(df_diversity_lat_analysis, aes(x = abs_lat, y = log(estimated_richness))) + 
     geom_point() + 
     geom_smooth(method = "lm", color = "red") + 
-    labs(x = "Distance from the Equator (°)", y = "Estimated Species Richness", 
-         title = "Estimated Asymptotic Anuran Richness vs Absolute Latitude") + 
+    labs(x = "Distance from the Equator (°)", y = "Log(Estimated Species Richness)", 
+         title = "Log Linear Model: Estimated Asymptotic Anuran Richness vs Absolute Latitude") + 
     theme_minimal() + 
     theme(panel.grid = element_blank())
-  fig_linear_regression_diversity_lat
+
+  fig_log_linear_regression_diversity_lat
   
-  ggsave("../figs/04_fig_linear_regression_diversity_lat.png", plot = fig_linear_regression_diversity_lat , width = 12, height = 9, dpi = 800)
+  ggsave("../figs/03_fig_log_linear_regression_diversity_lat.png", plot = fig_log_linear_regression_diversity_lat , width = 12, height = 9, dpi = 800)
   
   rm(list = ls())
+  
+  
