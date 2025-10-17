@@ -13,12 +13,8 @@ rm(list = ls())
 
 ## _Setting up Libraries --------
 library(tidyverse)
-library(tidyr)
-library(dplyr)
 library(janitor)
-library(stringr)
 library(sf)
-library(ggplot2)
 library(vegan)
 library(iNEXT)
 library(countrycode)
