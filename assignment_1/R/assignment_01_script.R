@@ -7,6 +7,8 @@
 ##
 ## 2025-10-10
 ##
+## Main edits to code and suggestions for improvement by Eva Innocente on 12-11-25, with minor feedback from Fangyi Li and Lishita Rowjee
+##
 ##***************************
 
 rm(list = ls())
@@ -23,7 +25,7 @@ library(maps)
 ## _Import Data --------
 
 # Use BOLD API to extract data
-# df_anura <- read_tsv("http://www.boldsystems.org/index.php/API_Public/combined?taxon=Anura&format=tsv")
+#df_anura <- read_tsv("http://www.boldsystems.org/index.php/API_Public/combined?taxon=Anura&format=tsv")
 # write_tsv(df_anura, "../data/df_anura.tsv")
 
 getwd()
@@ -77,37 +79,77 @@ df_check_equator <- df_anura2 %>%
   filter(lat == 0) # no observations returned, no specimen were recorded on the equator exactly
 rm(df_check_equator)
 
+#df_anura_cleaned <- df_anura2 %>%
+  #filter(!is.na(lat)) %>%
+  #filter(!is.na(lon)) %>%
+  #filter(!is.na(bin_uri)) %>%
+  #filter(!is.na(country) & country != "Unrecoverable") %>%
+  #mutate(hemisphere = ifelse(lat >= 0, "Northern", "Southern")) %>% # add hemisphere for later analysis of biodiversity differences
+  #mutate(lat_band = case_when(
+    #lat > 0 & lat < 10 ~ "0-10°N",
+    #lat >= 10 & lat < 20 ~ "10-20°N",
+    #lat >= 20 & lat < 30 ~ "20-30°N",
+    #lat >= 30 & lat < 40 ~ "30-40°N",
+    #lat >= 40 & lat < 50 ~ "40-50°N",
+    #lat >= 50 & lat < 60 ~ "50-60°N",
+    #lat >= 60 & lat < 70 ~ "60-70°N",
+    #lat >= 70 & lat < 80 ~ "70-80°N",
+    #lat >= 80 & lat <= 90 ~ "80-90°N",
+    #lat < 0 & lat > -10 ~ "0-10°S",
+    #lat <= -10 & lat > -20 ~ "10-20°S",
+    #lat <= -20 & lat > -30 ~ "20-30°S",
+    #lat <= -30 & lat > -40 ~ "30-40°S",
+    #lat <= -40 & lat > -50 ~ "40-50°S",
+    #lat <= -50 & lat > -60 ~ "50-60°S",
+    #lat <= -60 & lat > -70 ~ "60-70°S",
+    #lat <= -70 & lat > -80 ~ "70-80°S",
+    #lat <= -80 & lat >= -90 ~ "80-90°S",
+    #TRUE ~ "INVALID"
+  #))
+
+
+##### EDIT 1 by Eva:
+# This is a simpler way to make bins for latitude, based on the highest and lowest latitude present in the dataset (this way you're not making bins with nothing in them). I used the palaeoverse package:
+
+# install.packages("palaeoverse")
+library(palaeoverse)
+
+# checked what the min and max latitudes were
+
+max(df_anura2$lat, na.rm=T)
+min(df_anura2$lat, na.rm=T)
+
+# filtered as before- I named this dataframe df_test
+
 df_anura_cleaned <- df_anura2 %>%
   filter(!is.na(lat)) %>%
   filter(!is.na(lon)) %>%
   filter(!is.na(bin_uri)) %>%
   filter(!is.na(country) & country != "Unrecoverable") %>%
-  mutate(hemisphere = ifelse(lat >= 0, "Northern", "Southern")) %>% # add hemisphere for later analysis of biodiversity differences
-  mutate(lat_band = case_when(
-    lat > 0 & lat < 10 ~ "0-10°N",
-    lat >= 10 & lat < 20 ~ "10-20°N",
-    lat >= 20 & lat < 30 ~ "20-30°N",
-    lat >= 30 & lat < 40 ~ "30-40°N",
-    lat >= 40 & lat < 50 ~ "40-50°N",
-    lat >= 50 & lat < 60 ~ "50-60°N",
-    lat >= 60 & lat < 70 ~ "60-70°N",
-    lat >= 70 & lat < 80 ~ "70-80°N",
-    lat >= 80 & lat <= 90 ~ "80-90°N",
-    lat < 0 & lat > -10 ~ "0-10°S",
-    lat <= -10 & lat > -20 ~ "10-20°S",
-    lat <= -20 & lat > -30 ~ "20-30°S",
-    lat <= -30 & lat > -40 ~ "30-40°S",
-    lat <= -40 & lat > -50 ~ "40-50°S",
-    lat <= -50 & lat > -60 ~ "50-60°S",
-    lat <= -60 & lat > -70 ~ "60-70°S",
-    lat <= -70 & lat > -80 ~ "70-80°S",
-    lat <= -80 & lat >= -90 ~ "80-90°S",
-    TRUE ~ "INVALID"
-  ))
+  mutate(hemisphere = ifelse(lat >= 0, "Northern", "Southern")) 
+
+# First you create a dataframe of the bins
+
+bins <- lat_bins_degrees(size = 10, min = -50, max = 70, fit = FALSE, plot = FALSE)
+
+# Then run the bin_lat function to assign the bins you made and save it to a new object
+
+df_anura_cleaned <- bin_lat(df_anura_cleaned, bins = bins, lat = "lat", boundary = FALSE)
+
+# check how many specimens are in each latitude bin and making sure lat_bin is a factor, renaming to lat band to avoid confusion
+df_anura_cleaned %>%
+  group_by(lat_bin) %>%
+  summarise(n())
+
+df_anura_cleaned <- df_anura_cleaned %>%
+  mutate(lat_band = as.factor(lat_bin))
+
+#### end of edit
 
 # Add continent for later analysis of biodiversity - NA and unrecoverable country codes are filtered out earlier for countrycodes()
 df_anura_cleaned <- df_anura_cleaned %>%
   mutate(continent = countrycode(country, origin = "country.name", destination = "continent"))
+
 
 # Check to see if any latitude bands were not captured by the case_when clauses
 df_check_lat_band <- df_anura_cleaned %>%
@@ -116,10 +158,31 @@ rm(df_check_lat_band)
 
 # Check that the new column categorizes lat_band as required, and that each band has enough records for further analysis
 df_check_lat_band_range <- df_anura_cleaned %>%
-  group_by(lat_band) %>% # Replace 'region' with your column name
+  group_by(lat_band) %>% # Replace 'region' with your column name 
   summarise(min_lat = min(lat), max_lat = max(lat), med_lat = median(lat), n_records = n()) %>%
   arrange(min_lat)
+
+#### EDIT 2 by Eva: 
+# an effective way to show mumber of records per lat band could also be a bar chart of number of specimens in each lat band, or by grouping by the lat band variable and summarising
+
+# making a quick rough bar chart to check numbers of specimens in each lat band
+
+ggplot(data = df_anura_cleaned, aes(x = lat_band)) + geom_bar() + theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+
+# summarising the data frame to check number of observations
+
+df_anura_cleaned %>%
+  group_by(lat_band) %>% # Replace 'region' with your column name 
+  summarise(n())
+
+#### end of edit
+
 rm(df_check_lat_band_range)
+
+#### EDIT 3 by Eva: 
+# if you are just checking that something worked or looking at something in a dataframe (as above), it may be easier not to save it as an object so you don't have to keep removing objects, like I did in Edit 2. But this is up to personal preference! 
+
+#### end of edit
 
 # Clean names to make sure everything is in snake_case and filter duplicates
 clean_names(df_anura_cleaned)
@@ -149,28 +212,55 @@ summary(df_anura_cleaned$lat)
 summary(df_anura_cleaned$lon) # longitude range still seems to cover the entire globe
 
 # Look at plotted coordinates to visualize the spread of data
-world <- map_data("world") # from maps() package
+#world <- map_data("world") # from maps() package
 
-(fig_distribution_specimen <- ggplot() +
+#(fig_distribution_specimen <- ggplot() +
   # Create world map outline
-  geom_polygon(
-    data = world, aes(x = long, y = lat, group = group),
-    fill = "gray100", color = "gray80"
-  ) +
+  #geom_polygon(
+    #data = world, aes(x = long, y = lat, group = group),
+    #fill = "gray100", color = "gray80"
+  #) +
   # plot data points onto the map
-  geom_point(
-    data = df_anura_cleaned,
-    aes(x = lon, y = lat, colour = lat_band),
-    alpha = 0.6, size = 1
-  ) +
-  coord_fixed(1.3) + # this ratio of 1.3 to 1 lat to lon to make the map look less stretched out
-  labs(
-    title = "Distribution of Anura Specimens Collected",
-    x = "Longitude", y = "Latitude", colour = "Latitude Band"
-  ) +
-  theme_minimal())
+  #geom_point(
+    #data = df_anura_cleaned,
+    #aes(x = lon, y = lat, colour = lat_band),
+    #alpha = 0.6, size = 1
+  #) +
+  #coord_fixed(1.3) + # this ratio of 1.3 to 1 lat to lon to make the map look less stretched out
+  #labs(
+    #title = "Distribution of Anura Specimens Collected",
+    #x = "Longitude", y = "Latitude", colour = "Latitude Band"
+  #) +
+  #theme_minimal())
 
-ggsave("../figs/01_fig_distribution_of_anura_specimen.png", plot = fig_distribution_specimen, width = 12, height = 9, dpi = 800)
+#### EDIT 4 by Eva 
+
+## The original figure with the datapoints coloured by lat band was slightly redundant as it showed a measure of latitude twice. I removed the legend specifying lat band and changed the y axis intervals to represent the lat bands instead. I changed point size and transparency to represent density of data. This way, we can see how many specimens were collected in a lat band by the transparency of points. If the colour is darker then it shows where a lot specimens were collected vs. fewer. Using the test dataframe I made above
+
+### Changing figure:
+world <- map_data("world")
+(fig_distribution_specimen <- ggplot() +
+     # Create world map outline
+     geom_polygon(
+       data = world, aes(x = long, y = lat, group = group),
+       fill = "gray100", color = "gray80"
+     ) +
+     # plot data points onto the map
+     geom_point(
+       data = df_anura_cleaned,
+       aes(x = lon, y = lat, colour = lat_band),
+       alpha = 0.2, size = 0.8
+     ) + scale_y_continuous(breaks = seq(-60, 80, by = 10)) + guides(colour = "none")
+     + coord_fixed(1.3) # this ratio of 1.3 to 1 lat to lon to make the map look less stretched out
+     + labs(
+       title = "Distribution of Anura Specimens Collected",
+       x = "Longitude", y = "Latitude", colour = "Latitude Band"
+     ) +
+     theme_minimal()) 
+
+#### end of edit 
+
+#ggsave("../figs/01_fig_distribution_of_anura_specimen.png", plot = fig_distribution_specimen, width = 12, height = 9, dpi = 800)
 
 rm(world, fig_distribution_specimen)
 
@@ -182,10 +272,18 @@ write_tsv(df_anura_cleaned, "../data/df_anura_cleaned.tsv")
 qqnorm(df_anura_cleaned$lat)
 qqline(df_anura_cleaned$lat, col = "red")
 
-set.seed(123)
-sample_lat <- sample(df_anura_cleaned$lat, 5000) # Shapiro test doesn't allow for a sample larger than 5000
-shapiro.test(sample_lat) # Data is skewed, so cannot use mean as the value representing each latitude band
-rm(sample_lat)
+
+### EDIT 5 by Eva:
+# Since the anura dataset has 13307 observations in it, and the Shapiro test only allows up to 5000, this test may not be the best for determining deviations from normality. Using a plot like the qqnorm() function is a better practice. The assumption of normality is important for larger datasets. Source: (Ghasemi and Zahediasl, 2012).
+
+## commenting out these lines: 
+
+#set.seed(123)
+#sample_lat <- sample(df_anura_cleaned$lat, 5000) # Shapiro test doesn't allow for a sample larger than 5000
+#shapiro.test(sample_lat) # Data is skewed, so cannot use mean as the value representing each latitude band
+#rm(sample_lat)
+
+## end of edit
 
 # Impute latitude band values with median instead of categories or mean for regression testing since latitude is skewed
 # Extract median latitude from all of the latitude points
@@ -220,7 +318,7 @@ str(mat_anura_abundance)
 
 rm(df_anura_analysis_counts_spread, df_anura_analysis_counts)
 
-# Write matrix to a table and specify parameters for delimeters and row/col names
+# Write matrix to a table and specify parameters for delimiters and row/col names
 write.table(mat_anura_abundance,
   file = "../data/mat_anura_abundance.tsv",
   sep = "\t",
@@ -228,12 +326,14 @@ write.table(mat_anura_abundance,
   col.names = TRUE
 )
 
+
 # Plot rarefaction curves for each median lat point to determine sampling completeness
 png("../figs/02_fig_rarecurves.png", width = 3600, height = 2400, res = 300)
 rarecurve(mat_anura_abundance,
   main = "Rarefaction Curves at Different Latitudes",
   label = FALSE
 )
+
 # Format labels to avoid overlap
 sample_sums <- rowSums(mat_anura_abundance)
 specimen_sums <- specnumber(mat_anura_abundance)
@@ -250,6 +350,7 @@ text(
 dev.off()
 
 rm(sample_sums, specimen_sums, offsets)
+
 
 # Sampling not complete for some latitudes, drop lowest site values and compute Hill numbers for each site
 # Drop bands that do not fall within the 25th percentile
