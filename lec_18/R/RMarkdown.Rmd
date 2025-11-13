@@ -1,0 +1,251 @@
+---
+title: "RMarkdown HTML"
+author: "Brittany MacIntyre"
+date: "2024-11-15"
+output: html_document
+---
+
+## Introduction
+
+#### Part 1: Background
+
+R Markdown is a great way to organize code, code comments, and notes and helps generate HTML, PDF or Word reports. We begin with an .Rmd file that contains a combination of:
+
+1. markdown (simple/plain text formatting content)
+2. R code (organized in chunks)
+
+In markdown content (non-coding sections), you may write without commenting out lines. Markdown takes plain text with simple formatting cues which can be exported into various formats.
+
+#### Part 2: Knitr
+
+Before we get into some examples, let's learn how to "knit" our R Markdown file so we can see the output. For this .Rmd file, I selected the output as 'html_document' in the YAML header. This is so we can see the output readily in the Viewer pane. I'll show an example of a PDF output later on.
+
+If we want to render our .Rmd file into its final output format we can either select the 'Knit' button next to the settings button or use the shortcut: Shift+Cmd+K (Mac) or Ctrl+Shift+K (Windows/Linux). This is done through the package [knitr](https://yihui.org/knitr/). We will also use the R package [formatR](https://yihui.org/formatr/) to help us tidy and format our code + code comments and Markdown sections.
+
+```{r Load Packages, message=FALSE, results='hide'}
+#install.packages("rmarkdown") # use if you are not prompted to install this package upon opening the .Rmd file
+#install.packages("knitr") # may need to install if this is your first time using R Markdown
+#install.packages("formatR") # for formatting output documents
+library(formatR)
+library(tidyverse)
+library(viridis)
+```
+
+Notice in the viewer pane the code comments are wrapped in an ugly way--yuck.
+
+Using knitr and formatR, we can wrap long code comment text either chunk by chunk as follows, setting the width cut-off as 80 characters:
+
+```{r Load Packages cleaned, tidy = TRUE, tidy.opts=list(width.cutoff=80)}
+# install.packages("rmarkdown") # use if you are not prompted to install this package upon opening the .Rmd file
+# install.packages("knitr") # may need to install if this is your first time using R Markdown
+# install.packages("formatR") # for formatting output documents
+```
+
+Or, globally by loading knitr, and setting up the width output for all remaining chunks to 60 characters. To do this we need to call ```knitr::opts_chunk$set``` in a code chunk.  
+
+```{r Set Up Text Width Globally}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=60), tidy=TRUE)
+```
+
+Let's see if the above works on the code below which has a very long code comment.
+
+```{r Long text example}
+# this is a very very very very very very very very very very very very very very very very  very very long long long long line of text.
+
+
+```
+
+
+#### Part 3: Examples of Plain Text Formatting
+
+Some examples of different formatting cues:
+
+A single asterisk surrounding a word or phrase will create *italics*. Double asterisks produce **bold text**.
+
+Lists are created with dashes:
+
+- Dash item 1
+- Dash item 2
+
+Or, numbered lists with numbers:
+
+1. Number 1
+2. Number 2
+
+You can include [hyperlinked words](https://rmarkdown.rstudio.com/authoring_quick_tour.html#Overview) or hyperlinks of the URL itself <http://rmarkdown.rstudio.com> with angle brackets or footnotes with square brackets.[^1]
+
+[^1]: R Markdown for RStudio. https://rmarkdown.rstudio.com/authoring_quick_tour.html#Overview
+
+No matter where your bibliography/reference is placed in the document (as above), it will always output either at the end of your HTML document or PDF page.
+
+Additionally, text size for headers can also be generated with the use of '#' (number sign/hash mark/hashtag)
+
+# Header 1
+This is one number sign
+
+## Header 2
+This is two number signs
+
+### Header 3
+This is three number signs
+
+#### Header 4
+This is four number signs
+
+Next, let's try to centre our text! First, we'll type inside of a pair of angle brackets <>, similar to including a URL hyperlink surrounded by <>. Then we'll write the text in the line below and end it off by including /center between <>.
+
+<center>
+This is my centred title :)
+</center>
+
+What if we want to print out an image?
+
+<center>
+
+![RMarkdown is Great!](RMarkdown.png)
+
+</center>
+
+What if we want a double 'space' after our image? Create a line break with 'br' surrounded by <>.
+<br/><br/>
+
+**CHALLENGE 1:** We want to make a centred title, say for your Assignment #5. Create a title or use "Assignment #5" in Header size 2 that is centred in your output document.
+<br/><br/><br/><br/>
+In Markdown, we can even evaluate r expressions inline by eclosing them with ` using the 'r' qualifier.
+
+I counted `r sum(c(2, 4, 8))` black cats and `r length(c("brown", "orange", "calico"))` non-black cats.
+
+## R Code Chunks
+
+R code chunks are initialized by using the backwards dash ` three times in the line above and below a section of code:
+
+```
+Text inputted here will create a block of output looking code.
+```
+
+`see the difference with just one back tick? This shows up in the HTML format, but not the PDF version`
+
+Adding 'r' after a pair curly brackets {} tells R markdown what programming language the chunk will be in. 
+
+```{r here is a manual code chunk}
+# I created this code chunk manually!
+```
+
+Keyboard shortcuts to quickly insert a code chunk:
+
+1. Mac:                 Cmd + Option + i
+2. Windows/Linux:       Ctrl + Alt + i
+3. OR add chunk button in the editor toolbar
+
+#### Part A. Chunk Options
+
+We can customize each code chunk with knitr options, which are arguments set inside a pair of curly brackets {} immediatly after the initializing three back ticks for the code chunk.
+
+Here are some example arguments, note the lack of spaces between the equal signs(!):
+
+- `include=FALSE` prevents code and results (output) from appearing in finished file
+- `echo=FALSE` prevents code, but not the results (output) from appearing in the finished file (embedded figures)
+- `message=FALSE` prevents messages that are generated by code from appearing in the finished file
+- `warning=FALSE` prevents warnings that are generated by code from appearing in the finished file
+- `fig.cap="..."` adds a caption to a graphical result
+- `eval=FALSE` prevents execution/evaluation of code chunk
+- `results=hide` prevents text output from appearing in finished file
+- `results=asis` text output is written "as is" i.e. you can write out raw markdown text from R code
+
+```{r Default Chunk Options, include=FALSE}
+# Let's look at the list of default options set for our code chunks
+str(knitr::opts_chunk$get())
+```
+
+#### Part B. RMarkdown Document Start-Up
+
+Let's see what is automatically populated when you open a new .Rmd file in RStudio.
+
+#### Part C. Figures
+
+Let's embed a plot into our finalized document, where we only want to see the output and hide the code. We'll use data from the viridis R package to create a contour map of the Magma palette and give it a figure caption.
+
+```{r Embedded Plot, fig.cap="The Maunga Whau Volcano, Auckland"}
+image(volcano, col = viridis(200, option = "A"))
+```
+
+Or using the tidyverse dataset 'starwars' by centring the figure
+
+```{r starwars, fig.align='center', fig.cap="**Figure 1.** Histogram plot of Star Wars Characters"}
+data("starwars")
+head(starwars)
+
+hist(starwars$height,
+     xlab = "Height (cm)",
+     col = "mediumpurple1",
+     main = "Histogram of Star Wars Character Height\n with a Very Long Plot Title\n with 3 Separate Lines",
+     xlim = c(0,300))
+```
+
+Can we do the same thing, this time with a height histogram plot for gender?
+
+```{r starwars double plot, fig.align='center', fig.cap="**Figure 2.** Histogram of Star Wars character height for feminine gender (**A**) and masculine gender (**B**)"}
+df_fem <- starwars |> filter(gender == "feminine")
+df_masc <- starwars |> filter(gender == "masculine")
+
+# Create a new plotting window, and set to a 1 'row' x 2 'column' array
+par(mfrow = c(1, 2))
+
+# Plot feminine character height
+hist(df_fem$height,
+     xlab = "Height (cm)",
+     col = "turquoise3",
+     main = "Histogram of the Height of\n Feminine Star Wars Characters",
+     cex.main = 0.9,
+     xlim = c(0,300))
+
+# Plot masculine character height
+hist(df_masc$height,
+     xlab = "Height (cm)",
+     col = "sienna1",
+     main = "Histogram of the Height of\n Masculine Star Wars Characters",
+     cex.main = 0.9,
+     xlim = c(0,300))
+```
+
+
+#### Part D. Programming Languages
+
+Let's create a code chunk that uses a different programming language. knitr can execute the following language engines:
+
+- bash
+- Python
+- SQL
+- Rcpp
+- Stan
+- JavaScript
+- CSS
+
+Chunk options work with these languages as well!
+
+##### Bash
+
+```{bash}
+ls *.Rmd
+```
+
+##### Python
+
+```{python}
+x = 'hello, python world!'
+print(x.split(' '))
+```
+
+
+#### Part E. Tables
+
+Easiest way to make beautiful tables in R is with knitr's `kable` function. Other table generating packages to explore include: xtable, stargazer, pander, tables, and ascii.
+
+```{r Star Wars Table, echo=FALSE, results='asis'}
+kable(starwars[1:8,-c(12:14)], caption = "A knitr table with Star Wars Characters") # 'Table' is already set for the PDF
+
+kable(starwars[1:8,-c(12:14)], caption = "\\textbf{A knitr table with Star Wars Characters}")
+```
+
+
