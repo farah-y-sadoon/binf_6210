@@ -29,7 +29,7 @@ dfWhales
 
 fn_uniqueSpecies <- function(df) {
   df.unique <- df %>%
-    group_by(species_name) %>%
+    group_by(bin_uri) %>%
     summarize(num_species = length(unique(species_name))) %>%
     arrange(desc(num_species))
   return(df.unique)
@@ -85,7 +85,7 @@ for( i in 1:2) {
 
 ls_uniqueSp = vector(mode = "list", length = length(ls_mammals))
 for( i in 1:2) {
-  ls_uniqueSp[[i]] = fn_uniqueSpecies(ls_mammals[i])
+  ls_uniqueSp[[i]] = fn_uniqueSpecies(ls_mammals[[i]])
 }
 
 ls_uniqueSp
