@@ -1,0 +1,117 @@
+---
+title: "Community Phylogenetics Tutorial"
+author: "Farah Sadoon"
+date: "2025-11-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Loading libraries
+library(ape)
+library(picante)
+library(pez)
+library(phytools)
+library(vegan)
+library(adephylo)
+library(phylobase)
+library(geiger)
+library(mvMORPH)
+library(OUwie)
+library(hisse)
+library(BAMMtools)
+library(phylosignal)
+library(Biostrings)
+library(devtools)
+library(ggplot2)
+library(kableExtra)
+library(betapart)
+library(gridExtra)
+library(reshape2)
+library(ggtree)
+
+# Download files from Marc Cadotte's and Jonathan Davies' book 
+# "Phylogenies in Ecology: A guide to concepts and methods":
+
+#dir.create("../data/Jasper")
+
+#download.file("https://raw.githubusercontent.com/pedrohbraga/PhyloCompMethods-in-R-workshop/master/data/Jasper/resources/data/Jasper/jasper_data.csv", 
+#              "../data/Jasper/jasper_data.csv")
+
+#download.file("https://raw.githubusercontent.com/pedrohbraga/PhyloCompMethods-in-R-workshop/master/data/Jasper/resources/data/Jasper/jasper_tree.phy", 
+#              "../data/Jasper/jasper_tree.phy")
+
+# Download the tree files from this paper
+
+# download.file("https://onlinelibrary.wiley.com/action/
+# downloadSupplement?doi=10.1111%2Fj.1461-0248.2009.01307.x&attachmentId=179085359", 
+#              destfile = "data/ele_1307_sm_sa1.tre")
+
+# If the download of the above file does not work, 
+# download the first supplementary material from the following paper
+# and place it within your 'data' directory:
+# https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1461-0248.2009.01307.x
+```
+
+## A brief introduction to phylogenies
+Phylogenetic trees (i.e., evolutionary tree or cladogram) are branching diagrams illustrating the evolutionary relationships among taxa.
+
+Phylogenetic trees can be constructed based on species’ genes and/or on traits. Phylogenetic reconstruction through analyses of molecular sequences usually consists of three distinct procedures: (i) sequence alignment; (ii) character coding; and (iii) tree building. There is a range of available options for each of these steps, with no simple objective method for choosing between them.
+
+The root of a phylogenetic tree indicates that an ancestral lineage gave rise to all organisms on the tree. A branch point indicates where two lineages diverged. A lineage that evolved early and remains unbranched is a basal taxon. When two lineages stem from the same branch point, they are sister taxa. A branch with more than two lineages is a polytomy. Extracted from: https://doi.org/10.1016/j.tree.2012.10.015 
+In this course, we will not cover the steps necessary to reconstruct phylogenies. We will assume that a phylogenetic relationship is already available for the taxa of interest.
+
+
+## `ape` and the `phylo` object in R
+The core of phylogenetics analyses in R is the library ape - an acronym that stands for Analysis of Phylogenetics and Evolution.
+
+From `ape`, we depict two important functions to read and load trees into R: `read.nexus()` and `read.tree()`
+
+#### `read.nexus()` reads NEXUS formatted trees, which is organized into major units known as blocks and usually have the following basic structure:
+
+<pre>
+#NEXUS
+
+[!This is the data file used for my dissertation]
+
+BEGIN TAXA;
+    TaxLabels Scarabaeus Drosophila Aranaeus;
+
+END;
+
+BEGIN TREES;
+    Translate beetle Scarabaeus, fly Drosophila, spider Aranaeus;
+    Tree tree1 = ((1,2),3);
+    Tree tree2 = ((beetle,fly),spider);
+    Tree tree3 = ((Scarabaeus,Drosophila),Aranaeus);
+END;
+</pre>
+
+
+#### `read.tree` reads Newick formatted trees, which commonly have the following format:
+<pre>
+(Bovine:0.69395,(Hylobates:0.36079,(Pongo:0.33636,(G._Gorilla:0.17147, (P._paniscus:0.19268,H._sapiens:0.11927):0.08386):0.06124):0.15057):0.54939, Rodent:1.21460)
+</pre>
+
+When phylogenies are created, loaded and handled in `ape`, their objects are represented as a list of *class* `phylo`.
+
+Let’s try reading the following text string of a tree (is it in Newick or in NEXUS format?) and see what R tells us when we call it:
+
+```{r}
+tree.primates <- read.tree(text="((((Homo:0.21, Pongo:0.21):0.28, Macaca:0.49):0.13, 
+                           Ateles:0.62):0.38, Galago:1.00);")
+tree.primates
+```
+
+A class phylo object distributes the information of phylogenetic trees into six main components:
+
+```{r}
+str(tree.primates)
+```
+Since `phylo` is a list, we can access its elments by using the `$` symbol. We can access the matrix `edge` by running `phylo_object$edge`, which has the beginning and ending node number for all the nodes and tips of a given tree. In summary, this allows us to keep track of the internal and external nodes of the tree: 
+
+```{r}
+tree.primates$edge
+```
+
