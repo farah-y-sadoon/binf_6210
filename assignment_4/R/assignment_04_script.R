@@ -130,14 +130,14 @@ df_fish_filtered <- df_fish3 %>%
   ungroup()
 
 # visualize the sequence lengths distribution
-hist(df_fish_filtered$seq_length)
+(hist_sequence_lengths1 <- hist(df_fish_filtered$seq_length))
 
 # filter sequences lss than 500bp and more than 800bp
 df_fish_filtered <- df_fish_filtered %>% 
   filter(seq_length > 500 & seq_length < 800)
 
 # visualize the sequence lengths distribution
-hist(df_fish_filtered$seq_length)
+(hist_sequence_lengths2 <- hist(df_fish_filtered$seq_length))
 
 # remove df_fish3 as it is not needed
 rm(df_fish3)
@@ -157,8 +157,38 @@ df_fish_filtered <- df_fish_filtered %>%
   ungroup()
 
 # Visualize the sequence lengths distribution
-hist(df_fish_filtered$seq_length)
+hist_sequence_lengths3 <- hist(df_fish_filtered$seq_length)
 summary(df_fish_filtered$seq_length)
+
+# Create a 3-panel plot to show the sequence length distribution changes after filtering
+png("../fig/01_fig_hist_sequence_lengths_filter.png", width = 2500, height = 700, res = 300)
+par(mfrow = c(1, 3),
+    mar = c(5, 5, 4, 4),
+    cex.lab = 1.0,
+    cex.main = 1.0)
+
+# Panel 1 — before filtering
+plot(hist_sequence_lengths1,
+     main = "A: Before Filtering",
+     xlab = "Sequence Length (bp)",
+     col = "#3f5a51")
+
+# Panel 2 — after 500–800bp sequence length filter
+plot(hist_sequence_lengths2,
+     main = "B: After Sequence Length Filter",
+     xlab = "Sequence Length (bp)",
+     col = "#7FC0BA")
+
+# Panel 3 — after ambiguous base + gap filtering
+plot(hist_sequence_lengths3,
+     main = "C: After Ambiguous Base and Gap Filter",
+     xlab = "Sequence Length (bp)",
+     col = "#5aa6a0")
+
+dev.off()
+
+# remove histogram objects 
+rm(hist_sequence_lengths1, hist_sequence_lengths2, hist_sequence_lengths3)
 
 # Evaluate the number of entries for each species - should be one for each and ensure there are no missing values in the nucleotide sequences
 table(df_fish_filtered$species)
@@ -194,7 +224,7 @@ summary(tree_fish)
 tree_fish$tip.label <- gsub("_", " ", tree_fish$tip.label)
 
 # Plot phylogenetic tree
-png("../fig/01_fig_tree_fish.png", width = 14, height = 14, units = "in", res = 300)
+png("../fig/02_fig_tree_fish.png", width = 14, height = 14, units = "in", res = 300)
 ggtree(tree_fish, layout = "fan") +
   geom_tiplab(size = 2)
 dev.off()
@@ -226,7 +256,7 @@ fish_species_presence <- ggplot(df_comm_matrix_fish_long, aes(x = species, y = l
   xlab("Species") +
   ggtitle("Species Presence Across Great Lakes")
 
-ggsave(filename = "02_fig_fish_species_presence.png", plot = fish_species_presence, path = "../fig/", 
+ggsave(filename = "03_fig_fish_species_presence.png", plot = fish_species_presence, path = "../fig/", 
        width = 20, height = 8, dpi = 300)
 
 # Remove uneeded objects
@@ -237,11 +267,9 @@ fish_dist <- cophenetic.phylo(tree_fish)
 head(fish_dist)
 
 # Visualize the distance matrix
-png("../fig/03_fig_heatmap_fish_phylo_dist.png", width = 14, height = 14, res = 300, unit = "in")
+png("../fig/04_fig_heatmap_fish_phylo_dist.png", width = 14, height = 14, res = 300, unit = "in")
 heatmap(as.matrix(fish_dist), symm = TRUE, col = viridis::viridis(100), margins = c(12, 12))
 dev.off()
-
-rm(df_fish)
 
 #### _ Nearest Taxon Index (NTI) Calculation and Visualization --------
 # Using Nearest taxon index (NTI) as a measure for phylogenetic structure of communities
@@ -280,6 +308,6 @@ lake_cluster_disperse <- ggplot(fish_nti, aes(x = lake, y = NTI, fill = pattern)
   labs(fill = NULL) +
   theme_minimal()
 
-ggsave(filename = "04_fig_lake_cluster_disperse.png", plot = lake_cluster_disperse, path = "../fig/")
+ggsave(filename = "05_fig_lake_cluster_disperse.png", plot = lake_cluster_disperse, path = "../fig/")
 
 rm(lake_cluster_disperse)
