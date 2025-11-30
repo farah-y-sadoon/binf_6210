@@ -1,8 +1,10 @@
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
+# R temporary / workspace files
+*.RDataTmp*
+*.Rhistory
+*.Rproj.user/
+*.RData
+*.Ruserdata
+
+# Specific files / directories
 quizzes/quiz_3
 
-
-assignment_4/R/.RDataTmp1
