@@ -1,0 +1,12 @@
+IQ-TREE version 3.0.1 for MacOS ARM 64-bit built May  5 2025
+Developed by Bui Quang Minh, Thomas Wong, Nhan Ly-Trong, Huaiyan Ren
+Contributed by Lam-Tung Nguyen, Dominik Schrempf, Chris Bielow,
+Olga Chernomor, Michael Woodhams, Diep Thi Hoang, Heiko Schmidt
+
+Host:    Farahs-MacBook-Pro-2.local (SSE4.2, 24 GB RAM)
+Command: iqtree3 -s fish_sequences.aligned_MUSCLE.fas -m GTR+G -B 1000 -T AUTO
+Seed:    123317 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Fri Nov 28 21:28:30 2025
+Kernel:  SSE2 - auto-detect threads (14 CPU cores detected)
+
+Reading alignment file fish_sequences.aligned_MUSCLE.fas ... ERROR: File not found fish_sequences.aligned_MUSCLE.fas

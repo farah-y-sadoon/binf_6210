@@ -1,0 +1,827 @@
+IQ-TREE 3.0.1 built May  5 2025
+
+Input file name: fish_sequences_aligned_MUSCLE.fas
+Type of analysis: tree reconstruction + ultrafast bootstrap (1000 replicates)
+Random seed number: 908517
+
+REFERENCES
+----------
+
+To cite IQ-TREE 3 please use:
+
+Thomas K.F. Wong, Nhan Ly-Trong, Huaiyan Ren, Hector Banos, Andrew J. Roger,
+Edward Susko, Chris Bielow, Nicola De Maio, Nick Goldman, Matthew W. Hahn,
+Gavin Huttley, Robert Lanfear, Bui Quang Minh (2025)
+IQ-TREE 3: Phylogenomic Inference Software using Complex Evolutionary Models.
+Submitted.
+
+Please also cite the following paper(s) for the feature(s) that you used:
+
+Since you used ultrafast bootstrap (UFBoot) please also cite: 
+
+Diep Thi Hoang, Olga Chernomor, Arndt von Haeseler, Bui Quang Minh,
+and Le Sy Vinh (2018) UFBoot2: Improving the ultrafast bootstrap
+approximation. Mol. Biol. Evol., 35:518–522.
+https://doi.org/10.1093/molbev/msx281
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 173 sequences with 981 nucleotide sites
+Number of constant sites: 586 (= 59.735% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 586 (= 59.735% of all sites)
+Number of parsimony informative sites: 308
+Number of distinct site patterns: 411
+
+SUBSTITUTION PROCESS
+--------------------
+
+Model of substitution: GTR+F+G4
+
+Rate parameter R:
+
+  A-C: 1.9977
+  A-G: 13.0561
+  A-T: 2.1415
+  C-G: 0.6291
+  C-T: 14.0226
+  G-T: 1.0000
+
+State frequencies: (empirical counts from alignment)
+
+  pi(A) = 0.2382
+  pi(C) = 0.2786
+  pi(G) = 0.1844
+  pi(T) = 0.2988
+
+Rate matrix Q:
+
+  A   -0.8527    0.1317    0.5696    0.1514
+  C    0.1126    -1.132   0.02745    0.9915
+  G    0.7359   0.04146   -0.8481    0.0707
+  T    0.1207    0.9242   0.04363    -1.089
+
+Model of rate heterogeneity: Gamma with 4 categories
+Gamma shape alpha: 0.3529
+
+ Category  Relative_rate  Proportion
+  1         0.01055        0.25
+  2         0.1458         0.25
+  3         0.6749         0.25
+  4         3.169          0.25
+Relative rates are computed as MEAN of the portion of the Gamma distribution falling in the category.
+
+MAXIMUM LIKELIHOOD TREE
+-----------------------
+
+Log-likelihood of the tree: -30459.5384 (s.e. 1577.8164)
+Unconstrained log-likelihood (without tree): -4663.3174
+Number of free parameters (#branches + #model parameters): 352
+Akaike information criterion (AIC) score: 61623.0768
+Corrected Akaike information criterion (AICc) score: 62018.7966
+Bayesian information criterion (BIC) score: 63343.8544
+
+Total tree length (sum of branch lengths): 22.6296
+Sum of internal branch lengths: 8.0139 (35.4134% of tree length)
+
+WARNING: 4 near-zero internal branches (<0.0010) should be treated with caution
+         Such branches are denoted by '**' in the figure below
+
+NOTE: Tree is UNROOTED although outgroup taxon 'Acipenser_fulvescens' is drawn at root
+Numbers in parentheses are  ultrafast bootstrap support (%)
+
++----------------Acipenser_fulvescens
+|
+|                                   +--Alosa_aestivalis
+|                                +--| (100)
+|                                |  +--Alosa_pseudoharengus
+|                             +--| (99)
+|                             |  +--Alosa_sapidissima
+|                      +------| (100)
+|                      |      +--Alosa_chrysochloris
+|                  +---| (100)
+|                  |   +----------Dorosoma_cepedianum
+|               +--| (98)
+|               |  |                                       +--Campostoma_anomalum
+|               |  |                                   +---| (100)
+|               |  |                                   |   +--Campostoma_oligolepis
+|               |  |                                +--| (97)
+|               |  |                                |  |  +----Nocomis_biguttatus
+|               |  |                                |  +--| (100)
+|               |  |                                |     +--Nocomis_micropogon
+|               |  |                             +--| (97)
+|               |  |                             |  |                          +---Cyprinella_analostana
+|               |  |                             |  |                       +--| (74)
+|               |  |                             |  |                       |  |       +--Cyprinella_lutrensis
+|               |  |                             |  |                       |  |  +----| (100)
+|               |  |                             |  |                       |  |  |    |  +--Cyprinella_spiloptera
+|               |  |                             |  |                       |  |  |    +--| (100)
+|               |  |                             |  |                       |  |  |       +--Cyprinella_whipplei
+|               |  |                             |  |                       |  +--| (85)
+|               |  |                             |  |                       |     |     +-----Opsopoeodus_emiliae
+|               |  |                             |  |                       |     |  +--| (83)
+|               |  |                             |  |                       |     |  |  +---Pimephales_vigilax
+|               |  |                             |  |                       |     +--| (88)
+|               |  |                             |  |                       |        |  +--Pimephales_notatus
+|               |  |                             |  |                       |        +--| (95)
+|               |  |                             |  |                       |           +--Pimephales_promelas
+|               |  |                             |  |                    +--| (60)
+|               |  |                             |  |                    |  |                 +--Hybognathus_hankinsoni
+|               |  |                             |  |                    |  |              +--| (100)
+|               |  |                             |  |                    |  |              |  +--Hybognathus_regius
+|               |  |                             |  |                    |  |           +--| (89)
+|               |  |                             |  |                    |  |           |  +--Notropis_anogenus
+|               |  |                             |  |                    |  |        +--| (94)
+|               |  |                             |  |                    |  |        |  |  +--Notropis_heterodon
+|               |  |                             |  |                    |  |        |  +--| (95)
+|               |  |                             |  |                    |  |        |     |  +--Notropis_procne
+|               |  |                             |  |                    |  |        |     +--| (99)
+|               |  |                             |  |                    |  |        |        +--Notropis_stramineus
+|               |  |                             |  |                    |  |     +--| (62)
+|               |  |                             |  |                    |  |     |  +---Notropis_bifrenatus
+|               |  |                             |  |                    |  |  +--| (66)
+|               |  |                             |  |                    |  |  |  |     +--Luxilus_chrysocephalus
+|               |  |                             |  |                    |  |  |  |  +--| (100)
+|               |  |                             |  |                    |  |  |  |  |  +**Luxilus_cornutus
+|               |  |                             |  |                    |  |  |  +--| (52)
+|               |  |                             |  |                    |  |  |     +--Notropis_photogenis
+|               |  |                             |  |                    |  +**| (46)
+|               |  |                             |  |                    |     +--Notropis_buccatus
+|               |  |                             |  |                 +--| (56)
+|               |  |                             |  |                 |  +--Notropis_heterolepis
+|               |  |                             |  |              +**| (44)
+|               |  |                             |  |              |  |     +--Notropis_atherinoides
+|               |  |                             |  |              |  |  +--| (99)
+|               |  |                             |  |              |  |  |  +--Notropis_rubellus
+|               |  |                             |  |              |  +--| (71)
+|               |  |                             |  |              |     |     +--Notropis_blennius
+|               |  |                             |  |              |     |  +--| (78)
+|               |  |                             |  |              |     |  |  +---Notropis_chalybaeus
+|               |  |                             |  |              |     +--| (72)
+|               |  |                             |  |              |        |  +**Notropis_buchanani
+|               |  |                             |  |              |        +--| (100)
+|               |  |                             |  |              |           +**Notropis_volucellus
+|               |  |                             |  |           +--| (78)
+|               |  |                             |  |           |  +--Lythrurus_umbratilis
+|               |  |                             |  |        +--| (76)
+|               |  |                             |  |        |  +---Notropis_hudsonius
+|               |  |                             |  |     +--| (77)
+|               |  |                             |  |     |  +---------Phenacobius_mirabilis
+|               |  |                             |  |  +--| (100)
+|               |  |                             |  |  |  +---Notropis_dorsalis
+|               |  |                             |  +--| (100)
+|               |  |                             |     +--Macrhybopsis_storeriana
+|               |  |                          +--| (99)
+|               |  |                          |  |     +--Exoglossum_laurae
+|               |  |                          |  |  +--| (100)
+|               |  |                          |  |  |  +--Exoglossum_maxillingua
+|               |  |                          |  +--| (83)
+|               |  |                          |     |     +--Rhinichthys_atratulus
+|               |  |                          |     |  +--| (100)
+|               |  |                          |     |  |  +--Rhinichthys_obtusus
+|               |  |                          |     +--| (100)
+|               |  |                          |        +--Rhinichthys_cataractae
+|               |  |                       +--| (99)
+|               |  |                       |  +---Clinostomus_elongatus
+|               |  |                    +--| (91)
+|               |  |                    |  |  +---Notemigonus_crysoleucas
+|               |  |                    |  +--| (100)
+|               |  |                    |     +--Scardinius_erythrophthalmus
+|               |  |                 +--| (89)
+|               |  |                 |  |     +---Couesius_plumbeus
+|               |  |                 |  |  +**| (55)
+|               |  |                 |  |  |  +--Margariscus_margarita
+|               |  |                 |  +--| (99)
+|               |  |                 |     |  +----Semotilus_atromaculatus
+|               |  |                 |     +--| (85)
+|               |  |                 |        +------Semotilus_corporalis
+|               |  |              +--| (90)
+|               |  |              |  |     +--Chrosomus_eos
+|               |  |              |  |  +--| (100)
+|               |  |              |  |  |  +--Chrosomus_neogaeus
+|               |  |              |  +--| (100)
+|               |  |              |     +--Chrosomus_erythrogaster
+|               |  |           +--| (98)
+|               |  |           |  +-------Ctenopharyngodon_idella
+|               |  |        +--| (68)
+|               |  |        |  +--------------------Misgurnus_anguillicaudatus
+|               |  |     +--| (85)
+|               |  |     |  |  +------Carassius_auratus
+|               |  |     |  +--| (99)
+|               |  |     |     +---Cyprinus_carpio
+|               |  +-----| (100)
+|               |        |        +--Carpiodes_carpio
+|               |        |     +--| (100)
+|               |        |     |  +--Carpiodes_cyprinus
+|               |        |  +--| (100)
+|               |        |  |  |     +**Ictiobus_bubalus
+|               |        |  |  |  +--| (100)
+|               |        |  |  |  |  +**Ictiobus_cyprinellus
+|               |        |  |  +--| (100)
+|               |        |  |     +**Ictiobus_niger
+|               |        +--| (100)
+|               |           |        +--Catostomus_catostomus
+|               |           |     +--| (99)
+|               |           |     |  +--Catostomus_commersonii
+|               |           |  +--| (73)
+|               |           |  |  |     +--Erimyzon_oblongus
+|               |           |  |  |  +--| (100)
+|               |           |  |  |  |  +--Erimyzon_sucetta
+|               |           |  |  +--| (90)
+|               |           |  |     +---Minytrema_melanops
+|               |           +--| (100)
+|               |              |  +-----Hypentelium_nigricans
+|               |              +--| (100)
+|               |                 |  +--Moxostoma_anisurum
+|               |                 +--| (95)
+|               |                    |        +--Moxostoma_carinatum
+|               |                    |     +--| (72)
+|               |                    |     |  +--Moxostoma_macrolepidotum
+|               |                    |  +--| (72)
+|               |                    |  |  +--Moxostoma_valenciennesi
+|               |                    +--| (96)
+|               |                       +--Moxostoma_erythrurum
+|            +--| (87)
+|            |  +-----------------Anguilla_rostrata
+|         +--| (86)
+|         |  +-------Hiodon_tergisus
+|      +--| (86)
+|      |  +---------------Lota_lota
+|   +--| (84)
+|   |  |                           +-----Ambloplites_rupestris
+|   |  |                        +--| (98)
+|   |  |                        |  |  +-------Enneacanthus_gloriosus
+|   |  |                        |  +--| (91)
+|   |  |                        |     |  +-----Pomoxis_annularis
+|   |  |                        |     +--| (91)
+|   |  |                        |        +----Pomoxis_nigromaculatus
+|   |  |                     +--| (38)
+|   |  |                     |  |         +--Lepomis_cyanellus
+|   |  |                     |  |     +---| (100)
+|   |  |                     |  |     |   +----Lepomis_gulosus
+|   |  |                     |  |  +--| (82)
+|   |  |                     |  |  |  |  +--Lepomis_humilis
+|   |  |                     |  |  |  +--| (100)
+|   |  |                     |  |  |     +--Lepomis_macrochirus
+|   |  |                     |  +--| (100)
+|   |  |                     |     |     +----Lepomis_gibbosus
+|   |  |                     |     |  +--| (100)
+|   |  |                     |     |  |  +-----Lepomis_megalotis
+|   |  |                     |     +--| (98)
+|   |  |                     |        +---Lepomis_microlophus
+|   |  |                 +---| (100)
+|   |  |                 |   |    +--Micropterus_dolomieu
+|   |  |                 |   +----| (100)
+|   |  |                 |        +--Micropterus_salmoides
+|   |  |              +--| (46)
+|   |  |              |  |             +--Ammocrypta_clara
+|   |  |              |  |         +---| (100)
+|   |  |              |  |         |   +---Ammocrypta_pellucida
+|   |  |              |  |      +--| (82)
+|   |  |              |  |      |  |  +---Percina_caprodes
+|   |  |              |  |      |  +--| (100)
+|   |  |              |  |      |     |        +--Percina_copelandi
+|   |  |              |  |      |     |     +--| (90)
+|   |  |              |  |      |     |     |  +--Percina_maculata
+|   |  |              |  |      |     |  +--| (94)
+|   |  |              |  |      |     |  |  +--Percina_phoxocephala
+|   |  |              |  |      |     +--| (100)
+|   |  |              |  |      |        +--Percina_shumardi
+|   |  |              |  |   +--| (98)
+|   |  |              |  |   |  |        +----Etheostoma_blennioides
+|   |  |              |  |   |  |     +--| (97)
+|   |  |              |  |   |  |     |  |        +----Etheostoma_caeruleum
+|   |  |              |  |   |  |     |  |     +--| (100)
+|   |  |              |  |   |  |     |  |     |  +---Etheostoma_exile
+|   |  |              |  |   |  |     |  |  +--| (100)
+|   |  |              |  |   |  |     |  |  |  +----Etheostoma_zonale
+|   |  |              |  |   |  |     |  +--| (100)
+|   |  |              |  |   |  |     |     |  +--Etheostoma_nigrum
+|   |  |              |  |   |  |     |     +--| (100)
+|   |  |              |  |   |  |     |        +--Etheostoma_olmstedi
+|   |  |              |  |   |  |  +--| (88)
+|   |  |              |  |   |  |  |  +-----Etheostoma_flabellare
+|   |  |              |  |   |  +--| (85)
+|   |  |              |  |   |     |  +-----Etheostoma_microperca
+|   |  |              |  |   |     +--| (87)
+|   |  |              |  |   |        +----Etheostoma_spectabile
+|   |  |              |  +---| (98)
+|   |  |              |      |         +**Morone_americana
+|   |  |              |      |      +--| (100)
+|   |  |              |      |      |  +**Sander_vitreus
+|   |  |              |      |  +---| (100)
+|   |  |              |      |  |   +--Sander_canadensis
+|   |  |              |      +--| (99)
+|   |  |              |         +-----Perca_flavescens
+|   |  |           +--| (62)
+|   |  |           |  |                   +---Fundulus_diaphanus
+|   |  |           |  |           +-------| (100)
+|   |  |           |  |           |       |   +-------Fundulus_dispar
+|   |  |           |  |           |       +---| (99)
+|   |  |           |  |           |           +----Fundulus_notatus
+|   |  |           |  |        +--| (64)
+|   |  |           |  |        |  +---------------Labidesthes_sicculus
+|   |  |           |  |     +--| (77)
+|   |  |           |  |     |  +---------------Gambusia_affinis
+|   |  |           |  |  +--| (68)
+|   |  |           |  |  |  |                                   +--Ichthyomyzon_castaneus
+|   |  |           |  |  |  |                                +--| (100)
+|   |  |           |  |  |  |                                |  |  +--Ichthyomyzon_fossor
+|   |  |           |  |  |  |                                |  +--| (100)
+|   |  |           |  |  |  |                                |     +**Ichthyomyzon_unicuspis
+|   |  |           |  |  |  |                             +--| (96)
+|   |  |           |  |  |  |                             |  +--------Lethenteron_appendix
+|   |  |           |  |  |  |     +-----------------------| (100)
+|   |  |           |  |  |  |     |                       +---Petromyzon_marinus
+|   |  |           |  |  |  +-----| (94)
+|   |  |           |  |  |        +------------Osmerus_mordax
+|   |  |           |  +--| (73)
+|   |  |           |     |           +----Morone_chrysops
+|   |  |           |     +-----------| (100)
+|   |  |           |                 +----Morone_mississippiensis
+|   |  |        +--| (65)
+|   |  |        |  |              +------Apeltes_quadracus
+|   |  |        |  |           +--| (100)
+|   |  |        |  |           |  +------Gasterosteus_aculeatus
+|   |  |        |  |     +-----| (100)
+|   |  |        |  |     |     |  +-----------Culaea_inconstans
+|   |  |        |  |     |     +--| (99)
+|   |  |        |  |     |        +----Pungitius_pungitius
+|   |  |        |  |  +--| (64)
+|   |  |        |  |  |  |                  +--Lepisosteus_oculatus
+|   |  |        |  |  |  |  +---------------| (100)
+|   |  |        |  |  |  |  |               |  +--Lepisosteus_osseus
+|   |  |        |  |  |  |  |               +--| (98)
+|   |  |        |  |  |  |  |                  +--Lepisosteus_platostomus
+|   |  |        |  |  |  +--| (81)
+|   |  |        |  |  |     |    +------------Neogobius_melanostomus
+|   |  |        |  |  |     +----| (99)
+|   |  |        |  |  |          +-------Proterorhinus_semilunaris
+|   |  |        |  +--| (33)
+|   |  |        |     |          +--Cottus_bairdii
+|   |  |        |     |     +----| (100)
+|   |  |        |     |     |    |  +--Cottus_cognatus
+|   |  |        |     |     |    +--| (97)
+|   |  |        |     |     |       +--Cottus_ricei
+|   |  |        |     +-----| (100)
+|   |  |        |           +------Myoxocephalus_thompsonii
+|   |  |     +--| (53)
+|   |  |     |  |                  +--Coregonus_artedi
+|   |  |     |  |               +--| (100)
+|   |  |     |  |               |  |  +**Coregonus_hoyi
+|   |  |     |  |               |  +**| (96)
+|   |  |     |  |               |     +**Coregonus_kiyi
+|   |  |     |  |            +--| (100)
+|   |  |     |  |            |  +--Coregonus_clupeaformis
+|   |  |     |  |         +--| (96)
+|   |  |     |  |         |  |  +-----Prosopium_coulterii
+|   |  |     |  |         |  +--| (100)
+|   |  |     |  |         |     +--Prosopium_cylindraceum
+|   |  |     |  |   +-----| (100)
+|   |  |     |  |   |     |               +---Oncorhynchus_gorbuscha
+|   |  |     |  |   |     |            +--| (100)
+|   |  |     |  |   |     |            |  +--Oncorhynchus_nerka
+|   |  |     |  |   |     |         +--| (95)
+|   |  |     |  |   |     |         |  |  +--Oncorhynchus_kisutch
+|   |  |     |  |   |     |         |  +--| (100)
+|   |  |     |  |   |     |         |     +--Oncorhynchus_tshawytscha
+|   |  |     |  |   |     |     +---| (100)
+|   |  |     |  |   |     |     |   +--Oncorhynchus_mykiss
+|   |  |     |  |   |     |  +--| (99)
+|   |  |     |  |   |     |  |  |  +--Salvelinus_fontinalis
+|   |  |     |  |   |     |  |  +--| (100)
+|   |  |     |  |   |     |  |     +--Salvelinus_namaycush
+|   |  |     |  |   |     +--| (100)
+|   |  |     |  |   |        |  +--Salmo_salar
+|   |  |     |  |   |        +--| (100)
+|   |  |     |  |   |           +--Salmo_trutta
+|   |  |     |  +---| (96)
+|   |  |     |      |              +--Esox_americanus
+|   |  |     |      |       +------| (100)
+|   |  |     |      |       |      +--Esox_niger
+|   |  |     |      |  +----| (99)
+|   |  |     |      |  |    |  +------Esox_lucius
+|   |  |     |      |  |    +--| (99)
+|   |  |     |      |  |       +--------Esox_masquinongy
+|   |  |     |      +--| (96)
+|   |  |     |         +-----------Umbra_limi
+|   |  |  +--| (76)
+|   |  |  |  +-----------------Aplodinotus_grunniens
+|   |  +--| (56)
+|   |     |                  +--Ameiurus_catus
+|   |     |               +--| (81)
+|   |     |               |  |  +--Ameiurus_melas
+|   |     |               |  +--| (100)
+|   |     |               |     +--Ameiurus_nebulosus
+|   |     |         +-----| (100)
+|   |     |         |     +--Ameiurus_natalis
+|   |     |      +--| (98)
+|   |     |      |  |  +----Ictalurus_punctatus
+|   |     |      |  +--| (96)
+|   |     |      |     +---Pylodictis_olivaris
+|   |     +------| (100)
+|   |            |    +--Noturus_flavus
+|   |            +----| (100)
+|   |                 |     +----Noturus_gyrinus
+|   |                 |  +--| (99)
+|   |                 |  |  +--Noturus_insignis
+|   |                 +--| (88)
+|   |                    |  +----Noturus_miurus
+|   |                    +--| (98)
+|   |                       +--Noturus_stigmosus
++---| (91)
+|   |  +-----------Aphredoderus_sayanus
+|   +--| (85)
+|      +---------------------Percopsis_omiscomaycus
+|
++---------------Amia_calva
+
+Tree in newick format:
+
+(Acipenser_fulvescens:0.3311650335,((((((((((Alosa_aestivalis:0.0094082681,Alosa_pseudoharengus:0.0077122243)100:0.0165707080,Alosa_sapidissima:0.0273805326)99:0.0094574364,Alosa_chrysochloris:0.0451419841)100:0.1393803960,Dorosoma_cepedianum:0.2116319867)100:0.0792442157,((((((((((((Campostoma_anomalum:0.0465197358,Campostoma_oligolepis:0.0729867506)100:0.0845936018,(Nocomis_biguttatus:0.1076654514,Nocomis_micropogon:0.0539877708)100:0.0278530470)97:0.0247919716,(((((((((Cyprinella_analostana:0.0777517927,((Cyprinella_lutrensis:0.0637966608,(Cyprinella_spiloptera:0.0108343259,Cyprinella_whipplei:0.0135870483)100:0.0741468278)100:0.1097952712,((Opsopoeodus_emiliae:0.1283869066,Pimephales_vigilax:0.0906484726)83:0.0088872902,(Pimephales_notatus:0.0728916622,Pimephales_promelas:0.0749874812)95:0.0168130543)88:0.0171259340)85:0.0085840491)74:0.0148136075,((((((Hybognathus_hankinsoni:0.0061743059,Hybognathus_regius:0.0066705693)100:0.0551123020,Notropis_anogenus:0.0711647451)89:0.0054891898,(Notropis_heterodon:0.0560726185,(Notropis_procne:0.0457707517,Notropis_stramineus:0.0713956106)99:0.0368689014)95:0.0121843824)94:0.0068372394,Notropis_bifrenatus:0.0842605835)62:0.0068883305,((Luxilus_chrysocephalus:0.0017808117,Luxilus_cornutus:0.0000028652)100:0.0602132698,Notropis_photogenis:0.0720683118)52:0.0045574572)66:0.0048456966,Notropis_buccatus:0.0719027679)46:0.0000022031)60:0.0051476549,Notropis_heterolepis:0.0485804224)56:0.0073200486,((Notropis_atherinoides:0.0371008789,Notropis_rubellus:0.0481563407)99:0.0198883091,((Notropis_blennius:0.0542121707,Notropis_chalybaeus:0.0829642697)78:0.0244220254,(Notropis_buchanani:0.0000022476,Notropis_volucellus:0.0000020079)100:0.0414343689)72:0.0034764981)71:0.0137128252)44:0.0000024863,Lythrurus_umbratilis:0.0550045735)78:0.0199937145,Notropis_hudsonius:0.0794787048)76:0.0033635800,Phenacobius_mirabilis:0.2025127417)77:0.0039667313,Notropis_dorsalis:0.0857029942)100:0.0340865941,Macrhybopsis_storeriana:0.0583105283)100:0.0432460617)97:0.0158587891,((Exoglossum_laurae:0.0045287009,Exoglossum_maxillingua:0.0161474315)100:0.0758732770,((Rhinichthys_atratulus:0.0265905731,Rhinichthys_obtusus:0.0217984725)100:0.0612938206,Rhinichthys_cataractae:0.0390532183)100:0.0316553477)83:0.0078167230)99:0.0294588588,Clinostomus_elongatus:0.0766662315)99:0.0235457669,(Notemigonus_crysoleucas:0.0909359942,Scardinius_erythrophthalmus:0.0645845695)100:0.0431250117)91:0.0056650307,((Couesius_plumbeus:0.0803786711,Margariscus_margarita:0.0644180750)55:0.0000026313,(Semotilus_atromaculatus:0.1133384581,Semotilus_corporalis:0.1481704809)85:0.0552568404)99:0.0574454964)89:0.0170847007,((Chrosomus_eos:0.0044398519,Chrosomus_neogaeus:0.0083116324)100:0.0733421161,Chrosomus_erythrogaster:0.0662939374)100:0.0670054999)90:0.0283405578,Ctenopharyngodon_idella:0.1695582387)98:0.0364840325,Misgurnus_anguillicaudatus:0.4046755604)68:0.0073106639,(Carassius_auratus:0.1330461915,Cyprinus_carpio:0.0832865644)99:0.0360638327)85:0.0444549841,(((Carpiodes_carpio:0.0014638464,Carpiodes_cyprinus:0.0039217294)100:0.0558682280,((Ictiobus_bubalus:0.0000026189,Ictiobus_cyprinellus:0.0000021202)100:0.0017896567,Ictiobus_niger:0.0000027706)100:0.0290931614)100:0.0486647200,(((Catostomus_catostomus:0.0704506432,Catostomus_commersonii:0.0555336404)99:0.0107554905,((Erimyzon_oblongus:0.0426977652,Erimyzon_sucetta:0.0429284084)100:0.0608655337,Minytrema_melanops:0.0930056668)90:0.0286274764)73:0.0123294998,(Hypentelium_nigricans:0.1142937581,(Moxostoma_anisurum:0.0135863508,(((Moxostoma_carinatum:0.0419829042,Moxostoma_macrolepidotum:0.0156736242)72:0.0032034946,Moxostoma_valenciennesi:0.0347705840)72:0.0010584475,Moxostoma_erythrurum:0.0492650189)96:0.0081444606)95:0.0313944204)100:0.0442627296)100:0.0499198881)100:0.0499518291)100:0.1275164649)98:0.0526495562,Anguilla_rostrata:0.3480588299)87:0.0403063906,Hiodon_tergisus:0.1587505736)86:0.0345734825,Lota_lota:0.3209325913)86:0.0309305038,(((((((((Ambloplites_rupestris:0.1210560334,(Enneacanthus_gloriosus:0.1533091145,(Pomoxis_annularis:0.1141963494,Pomoxis_nigromaculatus:0.1038577022)91:0.0157571266)91:0.0240600410)98:0.0393719275,(((Lepomis_cyanellus:0.0489591145,Lepomis_gulosus:0.1025484015)100:0.0780743192,(Lepomis_humilis:0.0561849216,Lepomis_macrochirus:0.0435076320)100:0.0674308407)82:0.0100272194,((Lepomis_gibbosus:0.1049757265,Lepomis_megalotis:0.1145052310)100:0.0449254321,Lepomis_microlophus:0.0808880597)98:0.0561040898)100:0.0663186122)38:0.0067937243,(Micropterus_dolomieu:0.0656401707,Micropterus_salmoides:0.0531598373)100:0.1038021249)100:0.0801676499,((((Ammocrypta_clara:0.0568479771,Ammocrypta_pellucida:0.0865138537)100:0.0932808934,(Percina_caprodes:0.0875321822,(((Percina_copelandi:0.0451730004,Percina_maculata:0.0372973891)90:0.0045002228,Percina_phoxocephala:0.0372462919)94:0.0140993002,Percina_shumardi:0.0354943049)100:0.0216432621)100:0.0639189212)82:0.0112259157,(((Etheostoma_blennioides:0.0950969093,(((Etheostoma_caeruleum:0.1048008993,Etheostoma_exile:0.0789619503)100:0.0341883280,Etheostoma_zonale:0.0997473012)100:0.0224752797,(Etheostoma_nigrum:0.0322507560,Etheostoma_olmstedi:0.0495054379)100:0.0455030107)100:0.0169314012)97:0.0154467346,Etheostoma_flabellare:0.1217669819)88:0.0103712665,(Etheostoma_microperca:0.1263259905,Etheostoma_spectabile:0.1063424534)87:0.0485204138)85:0.0148291701)98:0.0562072472,(((Morone_americana:0.0000010000,Sander_vitreus:0.0000010000)100:0.0636717096,Sander_canadensis:0.0568247206)100:0.0913672267,Perca_flavescens:0.1318473389)99:0.0435176737)98:0.0802316539)46:0.0338923558,(((((Fundulus_diaphanus:0.0834814956,(Fundulus_dispar:0.1606282242,Fundulus_notatus:0.0957660572)99:0.0816333096)100:0.1529923159,Labidesthes_sicculus:0.3220612561)64:0.0257286053,Gambusia_affinis:0.3129987529)77:0.0383860925,((((Ichthyomyzon_castaneus:0.0331861634,(Ichthyomyzon_fossor:0.0018128630,Ichthyomyzon_unicuspis:0.0000010000)100:0.0335129220)100:0.0535256621,Lethenteron_appendix:0.1834703779)96:0.0198940706,Petromyzon_marinus:0.0919795980)100:0.4590789401,Osmerus_mordax:0.2638866963)94:0.1250820969)68:0.0150997487,(Morone_chrysops:0.0987491564,Morone_mississippiensis:0.1136208912)100:0.2432520782)73:0.0546625617)62:0.0502901308,((((Apeltes_quadracus:0.1487323445,Gasterosteus_aculeatus:0.1430675885)100:0.0530859291,(Culaea_inconstans:0.2305210095,Pungitius_pungitius:0.1076975826)99:0.0396837199)100:0.1240943476,((Lepisosteus_oculatus:0.0248137814,(Lepisosteus_osseus:0.0134124448,Lepisosteus_platostomus:0.0120484778)98:0.0349216837)100:0.3131548738,(Neogobius_melanostomus:0.2585914164,Proterorhinus_semilunaris:0.1659654717)99:0.1060509702)81:0.0469290466)64:0.0284583055,((Cottus_bairdii:0.0040688194,(Cottus_cognatus:0.0149297382,Cottus_ricei:0.0386895032)97:0.0082410754)100:0.1047454504,Myoxocephalus_thompsonii:0.1426046618)100:0.1198864918)33:0.0214302731)65:0.0106632597,(((((Coregonus_artedi:0.0017550562,(Coregonus_hoyi:0.0000010000,Coregonus_kiyi:0.0000010000)96:0.0000026776)100:0.0137036063,Coregonus_clupeaformis:0.0124248100)100:0.0723719372,(Prosopium_coulterii:0.1288268519,Prosopium_cylindraceum:0.0727884918)100:0.0268397030)96:0.0509877271,(((((Oncorhynchus_gorbuscha:0.0881902057,Oncorhynchus_nerka:0.0458182655)100:0.0413777466,(Oncorhynchus_kisutch:0.0225600621,Oncorhynchus_tshawytscha:0.0224753842)100:0.0326634763)95:0.0076742798,Oncorhynchus_mykiss:0.0372614379)100:0.0765601703,(Salvelinus_fontinalis:0.0499943579,Salvelinus_namaycush:0.0229532361)100:0.0559192576)99:0.0180284703,(Salmo_salar:0.0689618541,Salmo_trutta:0.0380840909)100:0.0550586614)100:0.0759221632)100:0.1317682109,(((Esox_americanus:0.0025764520,Esox_niger:0.0027760622)100:0.1434973119,(Esox_lucius:0.1388902395,Esox_masquinongy:0.1796181306)99:0.0703344100)99:0.0988311957,Umbra_limi:0.2296755539)96:0.0554793713)96:0.0797366053)53:0.0177046759,Aplodinotus_grunniens:0.3563927732)76:0.0332143639,((((Ameiurus_catus:0.0598480268,(Ameiurus_melas:0.0056714244,Ameiurus_nebulosus:0.0264396186)100:0.0352052322)81:0.0201283342,Ameiurus_natalis:0.0630434648)100:0.1143460448,(Ictalurus_punctatus:0.0965506148,Pylodictis_olivaris:0.0842783133)96:0.0078075747)98:0.0248966915,(Noturus_flavus:0.0355892108,((Noturus_gyrinus:0.0980675107,Noturus_insignis:0.0673419219)99:0.0084177271,(Noturus_miurus:0.0983973775,Noturus_stigmosus:0.0627478999)98:0.0277745554)88:0.0169349781)100:0.0981939613)100:0.1446739715)56:0.0401025399)84:0.0418829876,(Aphredoderus_sayanus:0.2281848724,Percopsis_omiscomaycus:0.4271961441)85:0.0668430275)91:0.0887048766,Amia_calva:0.3049497167);
+
+CONSENSUS TREE
+--------------
+
+Consensus tree is constructed from 1000 bootstrap trees
+Log-likelihood of consensus tree: -30459.546447
+Robinson-Foulds distance between ML tree and consensus tree: 2
+
+Branches with support >0.000000% are kept (extended consensus)
+Branch lengths are optimized by maximum likelihood on original alignment
+Numbers in parentheses are bootstrap supports (%)
+
++----------------Acipenser_fulvescens
+|
+|                                   +--Alosa_aestivalis
+|                                +--| (100)
+|                                |  +--Alosa_pseudoharengus
+|                             +--| (99)
+|                             |  +--Alosa_sapidissima
+|                      +------| (100)
+|                      |      +--Alosa_chrysochloris
+|                  +---| (100)
+|                  |   +----------Dorosoma_cepedianum
+|               +--| (98)
+|               |  |                                       +--Campostoma_anomalum
+|               |  |                                   +---| (100)
+|               |  |                                   |   +--Campostoma_oligolepis
+|               |  |                                +--| (97)
+|               |  |                                |  |  +----Nocomis_biguttatus
+|               |  |                                |  +--| (100)
+|               |  |                                |     +--Nocomis_micropogon
+|               |  |                             +--| (97)
+|               |  |                             |  |                          +---Cyprinella_analostana
+|               |  |                             |  |                       +--| (74)
+|               |  |                             |  |                       |  |       +--Cyprinella_lutrensis
+|               |  |                             |  |                       |  |  +----| (100)
+|               |  |                             |  |                       |  |  |    |  +--Cyprinella_spiloptera
+|               |  |                             |  |                       |  |  |    +--| (100)
+|               |  |                             |  |                       |  |  |       +--Cyprinella_whipplei
+|               |  |                             |  |                       |  +--| (85)
+|               |  |                             |  |                       |     |     +-----Opsopoeodus_emiliae
+|               |  |                             |  |                       |     |  +--| (83)
+|               |  |                             |  |                       |     |  |  +---Pimephales_vigilax
+|               |  |                             |  |                       |     +--| (88)
+|               |  |                             |  |                       |        |  +--Pimephales_notatus
+|               |  |                             |  |                       |        +--| (95)
+|               |  |                             |  |                       |           +--Pimephales_promelas
+|               |  |                             |  |                    +--| (60)
+|               |  |                             |  |                    |  |                 +--Hybognathus_hankinsoni
+|               |  |                             |  |                    |  |              +--| (100)
+|               |  |                             |  |                    |  |              |  +--Hybognathus_regius
+|               |  |                             |  |                    |  |           +--| (89)
+|               |  |                             |  |                    |  |           |  +--Notropis_anogenus
+|               |  |                             |  |                    |  |        +--| (94)
+|               |  |                             |  |                    |  |        |  |  +--Notropis_heterodon
+|               |  |                             |  |                    |  |        |  +--| (95)
+|               |  |                             |  |                    |  |        |     |  +--Notropis_procne
+|               |  |                             |  |                    |  |        |     +--| (99)
+|               |  |                             |  |                    |  |        |        +--Notropis_stramineus
+|               |  |                             |  |                    |  |     +--| (62)
+|               |  |                             |  |                    |  |     |  +---Notropis_bifrenatus
+|               |  |                             |  |                    |  |  +--| (66)
+|               |  |                             |  |                    |  |  |  |     +--Luxilus_chrysocephalus
+|               |  |                             |  |                    |  |  |  |  +--| (100)
+|               |  |                             |  |                    |  |  |  |  |  +--Luxilus_cornutus
+|               |  |                             |  |                    |  |  |  +--| (52)
+|               |  |                             |  |                    |  |  |     +--Notropis_photogenis
+|               |  |                             |  |                    |  +--| (46)
+|               |  |                             |  |                    |     +--Notropis_buccatus
+|               |  |                             |  |                 +--| (56)
+|               |  |                             |  |                 |  +--Notropis_heterolepis
+|               |  |                             |  |              +--| (44)
+|               |  |                             |  |              |  |     +--Notropis_atherinoides
+|               |  |                             |  |              |  |  +--| (99)
+|               |  |                             |  |              |  |  |  +--Notropis_rubellus
+|               |  |                             |  |              |  +--| (71)
+|               |  |                             |  |              |     |     +--Notropis_blennius
+|               |  |                             |  |              |     |  +--| (78)
+|               |  |                             |  |              |     |  |  +---Notropis_chalybaeus
+|               |  |                             |  |              |     +--| (72)
+|               |  |                             |  |              |        |  +--Notropis_buchanani
+|               |  |                             |  |              |        +--| (100)
+|               |  |                             |  |              |           +--Notropis_volucellus
+|               |  |                             |  |           +--| (78)
+|               |  |                             |  |           |  +--Lythrurus_umbratilis
+|               |  |                             |  |        +--| (76)
+|               |  |                             |  |        |  +---Notropis_hudsonius
+|               |  |                             |  |     +--| (77)
+|               |  |                             |  |     |  +---------Phenacobius_mirabilis
+|               |  |                             |  |  +--| (100)
+|               |  |                             |  |  |  +---Notropis_dorsalis
+|               |  |                             |  +--| (100)
+|               |  |                             |     +--Macrhybopsis_storeriana
+|               |  |                          +--| (99)
+|               |  |                          |  |     +--Exoglossum_laurae
+|               |  |                          |  |  +--| (100)
+|               |  |                          |  |  |  +--Exoglossum_maxillingua
+|               |  |                          |  +--| (83)
+|               |  |                          |     |     +--Rhinichthys_atratulus
+|               |  |                          |     |  +--| (100)
+|               |  |                          |     |  |  +--Rhinichthys_obtusus
+|               |  |                          |     +--| (100)
+|               |  |                          |        +--Rhinichthys_cataractae
+|               |  |                       +--| (99)
+|               |  |                       |  +---Clinostomus_elongatus
+|               |  |                    +--| (91)
+|               |  |                    |  |  +---Notemigonus_crysoleucas
+|               |  |                    |  +--| (100)
+|               |  |                    |     +--Scardinius_erythrophthalmus
+|               |  |                 +--| (89)
+|               |  |                 |  |     +---Couesius_plumbeus
+|               |  |                 |  |  +--| (55)
+|               |  |                 |  |  |  +--Margariscus_margarita
+|               |  |                 |  +--| (99)
+|               |  |                 |     |  +----Semotilus_atromaculatus
+|               |  |                 |     +--| (85)
+|               |  |                 |        +------Semotilus_corporalis
+|               |  |              +--| (90)
+|               |  |              |  |     +--Chrosomus_eos
+|               |  |              |  |  +--| (100)
+|               |  |              |  |  |  +--Chrosomus_neogaeus
+|               |  |              |  +--| (100)
+|               |  |              |     +--Chrosomus_erythrogaster
+|               |  |           +--| (98)
+|               |  |           |  +-------Ctenopharyngodon_idella
+|               |  |        +--| (68)
+|               |  |        |  +--------------------Misgurnus_anguillicaudatus
+|               |  |     +--| (85)
+|               |  |     |  |  +------Carassius_auratus
+|               |  |     |  +--| (99)
+|               |  |     |     +---Cyprinus_carpio
+|               |  +-----| (100)
+|               |        |        +--Carpiodes_carpio
+|               |        |     +--| (100)
+|               |        |     |  +--Carpiodes_cyprinus
+|               |        |  +--| (100)
+|               |        |  |  |     +--Ictiobus_bubalus
+|               |        |  |  |  +--| (100)
+|               |        |  |  |  |  +--Ictiobus_cyprinellus
+|               |        |  |  +--| (100)
+|               |        |  |     +--Ictiobus_niger
+|               |        +--| (100)
+|               |           |        +--Catostomus_catostomus
+|               |           |     +--| (99)
+|               |           |     |  +--Catostomus_commersonii
+|               |           |  +--| (73)
+|               |           |  |  |     +--Erimyzon_oblongus
+|               |           |  |  |  +--| (100)
+|               |           |  |  |  |  +--Erimyzon_sucetta
+|               |           |  |  +--| (90)
+|               |           |  |     +---Minytrema_melanops
+|               |           +--| (100)
+|               |              |  +-----Hypentelium_nigricans
+|               |              +--| (100)
+|               |                 |  +--Moxostoma_anisurum
+|               |                 +--| (95)
+|               |                    |        +--Moxostoma_carinatum
+|               |                    |     +--| (72)
+|               |                    |     |  +--Moxostoma_macrolepidotum
+|               |                    |  +--| (72)
+|               |                    |  |  +--Moxostoma_valenciennesi
+|               |                    +--| (96)
+|               |                       +--Moxostoma_erythrurum
+|            +--| (87)
+|            |  +-----------------Anguilla_rostrata
+|         +--| (86)
+|         |  +-------Hiodon_tergisus
+|      +--| (86)
+|      |  +---------------Lota_lota
+|   +--| (84)
+|   |  |                        +-----Ambloplites_rupestris
+|   |  |                     +--| (98)
+|   |  |                     |  |  +-------Enneacanthus_gloriosus
+|   |  |                     |  +--| (91)
+|   |  |                     |     |  +-----Pomoxis_annularis
+|   |  |                     |     +--| (91)
+|   |  |                     |        +----Pomoxis_nigromaculatus
+|   |  |                 +---| (100)
+|   |  |                 |   |            +--Lepomis_cyanellus
+|   |  |                 |   |        +---| (100)
+|   |  |                 |   |        |   +----Lepomis_gulosus
+|   |  |                 |   |     +--| (82)
+|   |  |                 |   |     |  |  +--Lepomis_humilis
+|   |  |                 |   |     |  +--| (100)
+|   |  |                 |   |     |     +--Lepomis_macrochirus
+|   |  |                 |   |  +--| (100)
+|   |  |                 |   |  |  |     +----Lepomis_gibbosus
+|   |  |                 |   |  |  |  +--| (100)
+|   |  |                 |   |  |  |  |  +-----Lepomis_megalotis
+|   |  |                 |   |  |  +--| (98)
+|   |  |                 |   |  |     +---Lepomis_microlophus
+|   |  |                 |   +--| (61)
+|   |  |                 |      |    +--Micropterus_dolomieu
+|   |  |                 |      +----| (100)
+|   |  |                 |           +--Micropterus_salmoides
+|   |  |              +--| (46)
+|   |  |              |  |             +--Ammocrypta_clara
+|   |  |              |  |         +---| (100)
+|   |  |              |  |         |   +---Ammocrypta_pellucida
+|   |  |              |  |      +--| (82)
+|   |  |              |  |      |  |  +---Percina_caprodes
+|   |  |              |  |      |  +--| (100)
+|   |  |              |  |      |     |        +--Percina_copelandi
+|   |  |              |  |      |     |     +--| (90)
+|   |  |              |  |      |     |     |  +--Percina_maculata
+|   |  |              |  |      |     |  +--| (94)
+|   |  |              |  |      |     |  |  +--Percina_phoxocephala
+|   |  |              |  |      |     +--| (100)
+|   |  |              |  |      |        +--Percina_shumardi
+|   |  |              |  |   +--| (98)
+|   |  |              |  |   |  |        +---Etheostoma_blennioides
+|   |  |              |  |   |  |     +--| (97)
+|   |  |              |  |   |  |     |  |        +----Etheostoma_caeruleum
+|   |  |              |  |   |  |     |  |     +--| (100)
+|   |  |              |  |   |  |     |  |     |  +---Etheostoma_exile
+|   |  |              |  |   |  |     |  |  +--| (100)
+|   |  |              |  |   |  |     |  |  |  +----Etheostoma_zonale
+|   |  |              |  |   |  |     |  +--| (100)
+|   |  |              |  |   |  |     |     |  +--Etheostoma_nigrum
+|   |  |              |  |   |  |     |     +--| (100)
+|   |  |              |  |   |  |     |        +--Etheostoma_olmstedi
+|   |  |              |  |   |  |  +--| (88)
+|   |  |              |  |   |  |  |  +-----Etheostoma_flabellare
+|   |  |              |  |   |  +--| (85)
+|   |  |              |  |   |     |  +-----Etheostoma_microperca
+|   |  |              |  |   |     +--| (87)
+|   |  |              |  |   |        +----Etheostoma_spectabile
+|   |  |              |  +---| (98)
+|   |  |              |      |         +--Morone_americana
+|   |  |              |      |      +--| (100)
+|   |  |              |      |      |  +--Sander_vitreus
+|   |  |              |      |  +---| (100)
+|   |  |              |      |  |   +--Sander_canadensis
+|   |  |              |      +--| (99)
+|   |  |              |         +-----Perca_flavescens
+|   |  |           +--| (62)
+|   |  |           |  |                   +---Fundulus_diaphanus
+|   |  |           |  |           +-------| (100)
+|   |  |           |  |           |       |   +-------Fundulus_dispar
+|   |  |           |  |           |       +---| (99)
+|   |  |           |  |           |           +----Fundulus_notatus
+|   |  |           |  |        +--| (64)
+|   |  |           |  |        |  +---------------Labidesthes_sicculus
+|   |  |           |  |     +--| (77)
+|   |  |           |  |     |  +---------------Gambusia_affinis
+|   |  |           |  |  +--| (68)
+|   |  |           |  |  |  |                                   +--Ichthyomyzon_castaneus
+|   |  |           |  |  |  |                                +--| (100)
+|   |  |           |  |  |  |                                |  |  +--Ichthyomyzon_fossor
+|   |  |           |  |  |  |                                |  +--| (100)
+|   |  |           |  |  |  |                                |     +--Ichthyomyzon_unicuspis
+|   |  |           |  |  |  |                             +--| (96)
+|   |  |           |  |  |  |                             |  +--------Lethenteron_appendix
+|   |  |           |  |  |  |     +-----------------------| (100)
+|   |  |           |  |  |  |     |                       +---Petromyzon_marinus
+|   |  |           |  |  |  +-----| (94)
+|   |  |           |  |  |        +------------Osmerus_mordax
+|   |  |           |  +--| (73)
+|   |  |           |     |           +----Morone_chrysops
+|   |  |           |     +-----------| (100)
+|   |  |           |                 +----Morone_mississippiensis
+|   |  |        +--| (65)
+|   |  |        |  |              +------Apeltes_quadracus
+|   |  |        |  |           +--| (100)
+|   |  |        |  |           |  +------Gasterosteus_aculeatus
+|   |  |        |  |     +-----| (100)
+|   |  |        |  |     |     |  +-----------Culaea_inconstans
+|   |  |        |  |     |     +--| (99)
+|   |  |        |  |     |        +----Pungitius_pungitius
+|   |  |        |  |  +--| (64)
+|   |  |        |  |  |  |                  +--Lepisosteus_oculatus
+|   |  |        |  |  |  |  +---------------| (100)
+|   |  |        |  |  |  |  |               |  +--Lepisosteus_osseus
+|   |  |        |  |  |  |  |               +--| (98)
+|   |  |        |  |  |  |  |                  +--Lepisosteus_platostomus
+|   |  |        |  |  |  +--| (81)
+|   |  |        |  |  |     |    +------------Neogobius_melanostomus
+|   |  |        |  |  |     +----| (99)
+|   |  |        |  |  |          +-------Proterorhinus_semilunaris
+|   |  |        |  +--| (33)
+|   |  |        |     |          +--Cottus_bairdii
+|   |  |        |     |     +----| (100)
+|   |  |        |     |     |    |  +--Cottus_cognatus
+|   |  |        |     |     |    +--| (97)
+|   |  |        |     |     |       +--Cottus_ricei
+|   |  |        |     +-----| (100)
+|   |  |        |           +------Myoxocephalus_thompsonii
+|   |  |     +--| (53)
+|   |  |     |  |                  +--Coregonus_artedi
+|   |  |     |  |               +--| (100)
+|   |  |     |  |               |  |  +--Coregonus_hoyi
+|   |  |     |  |               |  +--| (96)
+|   |  |     |  |               |     +--Coregonus_kiyi
+|   |  |     |  |            +--| (100)
+|   |  |     |  |            |  +--Coregonus_clupeaformis
+|   |  |     |  |         +--| (96)
+|   |  |     |  |         |  |  +-----Prosopium_coulterii
+|   |  |     |  |         |  +--| (100)
+|   |  |     |  |         |     +--Prosopium_cylindraceum
+|   |  |     |  |   +-----| (100)
+|   |  |     |  |   |     |                +---Oncorhynchus_gorbuscha
+|   |  |     |  |   |     |             +--| (100)
+|   |  |     |  |   |     |             |  +--Oncorhynchus_nerka
+|   |  |     |  |   |     |          +--| (95)
+|   |  |     |  |   |     |          |  |  +--Oncorhynchus_kisutch
+|   |  |     |  |   |     |          |  +--| (100)
+|   |  |     |  |   |     |          |     +--Oncorhynchus_tshawytscha
+|   |  |     |  |   |     |      +---| (100)
+|   |  |     |  |   |     |      |   +--Oncorhynchus_mykiss
+|   |  |     |  |   |     |   +--| (99)
+|   |  |     |  |   |     |   |  |  +--Salvelinus_fontinalis
+|   |  |     |  |   |     |   |  +--| (100)
+|   |  |     |  |   |     |   |     +--Salvelinus_namaycush
+|   |  |     |  |   |     +---| (100)
+|   |  |     |  |   |         |  +--Salmo_salar
+|   |  |     |  |   |         +--| (100)
+|   |  |     |  |   |            +--Salmo_trutta
+|   |  |     |  +---| (96)
+|   |  |     |      |              +--Esox_americanus
+|   |  |     |      |       +------| (100)
+|   |  |     |      |       |      +--Esox_niger
+|   |  |     |      |  +----| (99)
+|   |  |     |      |  |    |  +------Esox_lucius
+|   |  |     |      |  |    +--| (99)
+|   |  |     |      |  |       +--------Esox_masquinongy
+|   |  |     |      +--| (96)
+|   |  |     |         +-----------Umbra_limi
+|   |  |  +--| (76)
+|   |  |  |  +-----------------Aplodinotus_grunniens
+|   |  +--| (56)
+|   |     |                  +--Ameiurus_catus
+|   |     |               +--| (81)
+|   |     |               |  |  +--Ameiurus_melas
+|   |     |               |  +--| (100)
+|   |     |               |     +--Ameiurus_nebulosus
+|   |     |         +-----| (100)
+|   |     |         |     +--Ameiurus_natalis
+|   |     |      +--| (98)
+|   |     |      |  |  +----Ictalurus_punctatus
+|   |     |      |  +--| (96)
+|   |     |      |     +---Pylodictis_olivaris
+|   |     +------| (100)
+|   |            |    +--Noturus_flavus
+|   |            +----| (100)
+|   |                 |     +----Noturus_gyrinus
+|   |                 |  +--| (99)
+|   |                 |  |  +--Noturus_insignis
+|   |                 +--| (88)
+|   |                    |  +----Noturus_miurus
+|   |                    +--| (98)
+|   |                       +--Noturus_stigmosus
++---| (91)
+|   |  +----------Aphredoderus_sayanus
+|   +--| (85)
+|      +---------------------Percopsis_omiscomaycus
+|
++---------------Amia_calva
+
+
+Consensus tree in newick format: 
+
+(Acipenser_fulvescens:0.3306712923,((((((((((Alosa_aestivalis:0.0093961805,Alosa_pseudoharengus:0.0077036337)100:0.0165530181,Alosa_sapidissima:0.0273423959)99:0.0094064577,Alosa_chrysochloris:0.0451466732)100:0.1391445553,Dorosoma_cepedianum:0.2113565231)100:0.0790930641,((((((((((((Campostoma_anomalum:0.0464530794,Campostoma_oligolepis:0.0729128664)100:0.0844649400,(Nocomis_biguttatus:0.1075321490,Nocomis_micropogon:0.0539140119)100:0.0277947200)97:0.0247707179,(((((((((Cyprinella_analostana:0.0776546415,((Cyprinella_lutrensis:0.0635588367,(Cyprinella_spiloptera:0.0108285832,Cyprinella_whipplei:0.0135680023)100:0.0741650515)100:0.1097345407,((Opsopoeodus_emiliae:0.1282039530,Pimephales_vigilax:0.0905228477)83:0.0088899480,(Pimephales_notatus:0.0727828004,Pimephales_promelas:0.0748878912)95:0.0168032752)88:0.0170945678)85:0.0085783549)74:0.0147890370,((((((Hybognathus_hankinsoni:0.0061736656,Hybognathus_regius:0.0066584672)100:0.0550425828,Notropis_anogenus:0.0710599263)89:0.0054893612,(Notropis_heterodon:0.0559798218,(Notropis_procne:0.0457062761,Notropis_stramineus:0.0713048930)99:0.0368335445)95:0.0121845746)94:0.0068252520,Notropis_bifrenatus:0.0841556356)62:0.0068816042,((Luxilus_chrysocephalus:0.0017784101,Luxilus_cornutus:0.0000029943)100:0.0601159409,Notropis_photogenis:0.0719477557)52:0.0045868837)66:0.0048385933,Notropis_buccatus:0.0718175042)46:0.0000028512)60:0.0051445239,Notropis_heterolepis:0.0485177205)56:0.0073106659,((Notropis_atherinoides:0.0370579188,Notropis_rubellus:0.0480975404)99:0.0198612002,((Notropis_blennius:0.0541354013,Notropis_chalybaeus:0.0828522327)78:0.0243988554,(Notropis_buchanani:0.0000029943,Notropis_volucellus:0.0000029943)100:0.0413776211)72:0.0034795357)71:0.0136964447)44:0.0000025430,Lythrurus_umbratilis:0.0549337031)78:0.0199717244,Notropis_hudsonius:0.0793708019)76:0.0033581729,Phenacobius_mirabilis:0.2022325295)77:0.0039673026,Notropis_dorsalis:0.0855949660)100:0.0340340377,Macrhybopsis_storeriana:0.0582422723)100:0.0431936627)97:0.0158039247,((Exoglossum_laurae:0.0045484409,Exoglossum_maxillingua:0.0161064099)100:0.0757866889,((Rhinichthys_atratulus:0.0265559040,Rhinichthys_obtusus:0.0217763553)100:0.0612449870,Rhinichthys_cataractae:0.0390664752)100:0.0314864396)83:0.0078781731)99:0.0294199271,Clinostomus_elongatus:0.0765816518)99:0.0235111767,(Notemigonus_crysoleucas:0.0907997625,Scardinius_erythrophthalmus:0.0645007344)100:0.0430562055)91:0.0056628789,((Couesius_plumbeus:0.0802797830,Margariscus_margarita:0.0643363084)55:0.0000020927,(Semotilus_atromaculatus:0.1131733414,Semotilus_corporalis:0.1479511194)85:0.0551719634)99:0.0573501710)89:0.0170574206,((Chrosomus_eos:0.0044357895,Chrosomus_neogaeus:0.0083133284)100:0.0733446569,Chrosomus_erythrogaster:0.0662068577)100:0.0669279724)90:0.0283187338,Ctenopharyngodon_idella:0.1691689795)98:0.0364588230,Misgurnus_anguillicaudatus:0.4041293696)68:0.0072937253,(Carassius_auratus:0.1329218821,Cyprinus_carpio:0.0830507662)99:0.0360727121)85:0.0443545836,(((Carpiodes_carpio:0.0014628195,Carpiodes_cyprinus:0.0039155578)100:0.0558132267,((Ictiobus_bubalus:0.0000029943,Ictiobus_cyprinellus:0.0000029943)100:0.0017866884,Ictiobus_niger:0.0000029943)100:0.0290463859)100:0.0486388021,(((Catostomus_catostomus:0.0703539661,Catostomus_commersonii:0.0554712652)99:0.0107469828,((Erimyzon_oblongus:0.0426478532,Erimyzon_sucetta:0.0428722427)100:0.0608039629,Minytrema_melanops:0.0928134960)90:0.0286224204)73:0.0123133992,(Hypentelium_nigricans:0.1141031749,(Moxostoma_anisurum:0.0135715802,(((Moxostoma_carinatum:0.0419343354,Moxostoma_macrolepidotum:0.0156539763)72:0.0032002554,Moxostoma_valenciennesi:0.0347292151)72:0.0010593734,Moxostoma_erythrurum:0.0492057052)96:0.0081357662)95:0.0313978457)100:0.0441542918)100:0.0498196337)100:0.0499083654)100:0.1272777179)98:0.0526156449,Anguilla_rostrata:0.3468956654)87:0.0401681924,Hiodon_tergisus:0.1584367416)86:0.0344541500,Lota_lota:0.3201889686)86:0.0309393900,((((((((Ambloplites_rupestris:0.1186707039,(Enneacanthus_gloriosus:0.1524045001,(Pomoxis_annularis:0.1145390957,Pomoxis_nigromaculatus:0.1031095563)91:0.0171880649)91:0.0235503740)98:0.0382690447,((((Lepomis_cyanellus:0.0484836296,Lepomis_gulosus:0.1028012083)100:0.0778579495,(Lepomis_humilis:0.0559736404,Lepomis_macrochirus:0.0435803663)100:0.0681514809)82:0.0102725506,((Lepomis_gibbosus:0.1050333177,Lepomis_megalotis:0.1143842112)100:0.0450028837,Lepomis_microlophus:0.0803012280)98:0.0553777893)100:0.0633362907,(Micropterus_dolomieu:0.0668938575,Micropterus_salmoides:0.0519497109)100:0.1039851407)61:0.0098024463)100:0.0806857865,((((Ammocrypta_clara:0.0567457984,Ammocrypta_pellucida:0.0864201675)100:0.0931768071,(Percina_caprodes:0.0874898380,(((Percina_copelandi:0.0451286701,Percina_maculata:0.0372508993)90:0.0044837444,Percina_phoxocephala:0.0372103549)94:0.0140634664,Percina_shumardi:0.0354658217)100:0.0215500311)100:0.0638027726)82:0.0112627169,(((Etheostoma_blennioides:0.0948804983,(((Etheostoma_caeruleum:0.1046350304,Etheostoma_exile:0.0788677060)100:0.0341310067,Etheostoma_zonale:0.0996135966)100:0.0224570204,(Etheostoma_nigrum:0.0322051788,Etheostoma_olmstedi:0.0494488334)100:0.0454486536)100:0.0169421910)97:0.0155038794,Etheostoma_flabellare:0.1215540913)88:0.0102773114,(Etheostoma_microperca:0.1261493800,Etheostoma_spectabile:0.1061755005)87:0.0483948642)85:0.0148762933)98:0.0559463819,(((Morone_americana:0.0000029943,Sander_vitreus:0.0000029943)100:0.0635010781,Sander_canadensis:0.0568223195)100:0.0924236242,Perca_flavescens:0.1302742635)99:0.0437001545)98:0.0818936418)46:0.0316773478,(((((Fundulus_diaphanus:0.0836783108,(Fundulus_dispar:0.1603743842,Fundulus_notatus:0.0957459445)99:0.0811234844)100:0.1526843277,Labidesthes_sicculus:0.3213126967)64:0.0258177102,Gambusia_affinis:0.3133638985)77:0.0369915265,((((Ichthyomyzon_castaneus:0.0331481365,(Ichthyomyzon_fossor:0.0018103243,Ichthyomyzon_unicuspis:0.0000029943)100:0.0334749892)100:0.0534666444,Lethenteron_appendix:0.1831898981)96:0.0199430074,Petromyzon_marinus:0.0917427792)100:0.4590689155,Osmerus_mordax:0.2630928025)94:0.1261253072)68:0.0153377350,(Morone_chrysops:0.0998000006,Morone_mississippiensis:0.1122156908)100:0.2425199020)73:0.0545072845)62:0.0500898729,((((Apeltes_quadracus:0.1484413020,Gasterosteus_aculeatus:0.1428734680)100:0.0530135319,(Culaea_inconstans:0.2300501520,Pungitius_pungitius:0.1076837222)99:0.0395704195)100:0.1234074478,((Lepisosteus_oculatus:0.0248942496,(Lepisosteus_osseus:0.0133939631,Lepisosteus_platostomus:0.0120366384)98:0.0347914245)100:0.3129326044,(Neogobius_melanostomus:0.2584600673,Proterorhinus_semilunaris:0.1656201670)99:0.1058937177)81:0.0472370238)64:0.0289354479,((Cottus_bairdii:0.0043735364,(Cottus_cognatus:0.0149193857,Cottus_ricei:0.0386401980)97:0.0079464073)100:0.1047588754,Myoxocephalus_thompsonii:0.1420777318)100:0.1193035662)33:0.0215225804)65:0.0105685633,(((((Coregonus_artedi:0.0017521740,(Coregonus_hoyi:0.0000029943,Coregonus_kiyi:0.0000029943)96:0.0000029943)100:0.0136822000,Coregonus_clupeaformis:0.0124171373)100:0.0723862186,(Prosopium_coulterii:0.1285714388,Prosopium_cylindraceum:0.0726246379)100:0.0267578881)96:0.0507630670,(((((Oncorhynchus_gorbuscha:0.0880294625,Oncorhynchus_nerka:0.0457799379)100:0.0413270865,(Oncorhynchus_kisutch:0.0225275525,Oncorhynchus_tshawytscha:0.0224538826)100:0.0326285138)95:0.0076640323,Oncorhynchus_mykiss:0.0372202372)100:0.0764461680,(Salvelinus_fontinalis:0.0499447551,Salvelinus_namaycush:0.0229241086)100:0.0558849974)99:0.0181022078,(Salmo_salar:0.0688618724,Salmo_trutta:0.0380886016)100:0.0547812353)100:0.0759702440)100:0.1312024971,(((Esox_americanus:0.0025229059,Esox_niger:0.0028118544)100:0.1430585714,(Esox_lucius:0.1386532819,Esox_masquinongy:0.1793728450)99:0.0703758062)99:0.0985302501,Umbra_limi:0.2288888909)96:0.0555405860)96:0.0800976216)53:0.0173984748,Aplodinotus_grunniens:0.3548333405)76:0.0333150913,((((Ameiurus_catus:0.0597770333,(Ameiurus_melas:0.0056632629,Ameiurus_nebulosus:0.0264105188)100:0.0351575972)81:0.0201146986,Ameiurus_natalis:0.0629525248)100:0.1141544502,(Ictalurus_punctatus:0.0963952466,Pylodictis_olivaris:0.0841782527)96:0.0077890044)98:0.0248657951,(Noturus_flavus:0.0355456964,((Noturus_gyrinus:0.0979295723,Noturus_insignis:0.0672479840)99:0.0084156048,(Noturus_miurus:0.0983075290,Noturus_stigmosus:0.0626859940)98:0.0277270126)88:0.0169233715)100:0.0980217237)100:0.1449584366)56:0.0394198066)84:0.0417092499,(Aphredoderus_sayanus:0.2274994804,Percopsis_omiscomaycus:0.4261450929)85:0.0668438399)91:0.0885183422,Amia_calva:0.3041844403);
+
+ALISIM COMMAND
+--------------
+To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
+
+--alisim simulated_MSA -t fish_sequences_aligned_MUSCLE.fas.treefile -m "GTR{1.99769,13.0561,2.14151,0.629107,14.0226}+F{0.238221,0.278563,0.184393,0.298823}+G4{0.352918}" --length 981
+
+To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
+
+iqtree -s fish_sequences_aligned_MUSCLE.fas --alisim mimicked_MSA
+
+To simulate any number of alignments in either of the two commandlines above, use the --num-alignments options, for example mimic 100 alignments you would use the command line:
+
+iqtree -s fish_sequences_aligned_MUSCLE.fas --alisim mimicked_MSA --num-alignments 100
+
+For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
+
+TIME STAMP
+----------
+
+Date and time: Fri Nov 28 21:30:59 2025
+Total CPU time used: 112.946457 seconds (0h:1m:52s)
+Total wall-clock time used: 123.1702681 seconds (0h:2m:3s)
+
