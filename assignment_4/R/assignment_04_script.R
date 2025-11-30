@@ -1,5 +1,6 @@
 ##***************************
 ## BINF 6410 Software Tools - Assignment 4
+## Assessing Phylogenetic Structure and Community Assembly of Great Lakes Fish
 ##
 ## Farah Sadoon 1302190
 ##
