@@ -15,11 +15,11 @@ library(tidyverse)
 library(janitor)
 library(picante)
 library(ape)
-library(stringi)
 library(httr)
-library(Biostrings)
 library(phylotools)
 library(ggtree)
+library(ggrepel)
+library(patchwork)
 
 ##_Loading, Exploring and Cleaning Data ----
 
@@ -162,7 +162,7 @@ hist_sequence_lengths3 <- hist(df_fish_filtered$seq_length)
 summary(df_fish_filtered$seq_length)
 
 # Create a 3-panel plot to show the sequence length distribution changes after filtering
-png("../fig/01_fig_hist_sequence_lengths_filter.png", width = 2500, height = 700, res = 300)
+# png("../fig/01_fig_hist_sequence_lengths_filter.png", width = 2500, height = 700, res = 300) - UNCOMMENT TO SAVE FILE
 par(mfrow = c(1, 3),
     mar = c(5, 5, 4, 4),
     cex.lab = 1.0,
@@ -186,10 +186,10 @@ plot(hist_sequence_lengths3,
      xlab = "Sequence Length (bp)",
      col = "#5aa6a0")
 
-dev.off()
+#dev.off() - UNCOMMENT TO SAVE FILE
 
 # remove histogram objects 
-rm(hist_sequence_lengths1, hist_sequence_lengths2, hist_sequence_lengths3)
+# rm(hist_sequence_lengths1, hist_sequence_lengths2, hist_sequence_lengths3)
 
 # Evaluate the number of entries for each species - should be one for each and ensure there are no missing values in the nucleotide sequences
 table(df_fish_filtered$species)
@@ -202,7 +202,7 @@ sum(is.na(df_fish_filtered$nucleotides))
 df_sequences_fasta <- df_fish_filtered %>%
   transmute(seq.name = gsub(" ", "_", species), seq.text = nucleotides) # make headers for fasta file with underscores to make sure names look proper in MEGA once exported
 
-dat2fasta(dat = df_sequences_fasta, outfile = "../data/phylo/fish_sequences.fasta")
+# dat2fasta(dat = df_sequences_fasta, outfile = "../data/phylo/fish_sequences.fasta") - UNCOMMENT TO SAVE FILE
 
 table(df_sequences_fasta$seq.name)
 
@@ -225,10 +225,10 @@ summary(tree_fish)
 tree_fish$tip.label <- gsub("_", " ", tree_fish$tip.label)
 
 # Plot phylogenetic tree
-png("../fig/02_fig_tree_fish.png", width = 14, height = 14, units = "in", res = 300)
-ggtree(tree_fish, layout = "fan") +
-  geom_tiplab(size = 2)
-dev.off()
+# png("../fig/02_fig_tree_fish.png", width = 14, height = 14, units = "in", res = 300) - UNCOMMENT TO SAVE FILE
+print(ggtree(tree_fish, layout = "fan") +
+  geom_tiplab(size = 2))
+# dev.off() - UNCOMMENT TO SAVE FILE
 
 ### _ Community Structure Analysis --------
 # Create community matrix for picante() 
@@ -257,20 +257,82 @@ fish_species_presence <- ggplot(df_comm_matrix_fish_long, aes(x = species, y = l
   xlab("Species") +
   ggtitle("Species Presence Across Great Lakes")
 
-ggsave(filename = "03_fig_fish_species_presence.png", plot = fish_species_presence, path = "../fig/", 
-       width = 20, height = 8, dpi = 300)
+# ggsave(filename = "03_fig_fish_species_presence.png", plot = fish_species_presence, path = "../fig/", - UNCOMMENT TO SAVE FILE
+       # width = 20, height = 8, dpi = 300) - UNCOMMENT TO SAVE FILE
 
 # Remove uneeded objects
 rm(df_comm_matrix_fish_long, fish_species_presence)
+
+# Calculate phylogenetic distance (PD) and species richness (SR)
+fish_pd <- pd(samp = comm_matrix_fish, 
+                tree = tree_fish,
+                include.root = FALSE)
+
+head(fish_pd)
+
+# Save results of PD and SR measures
+# capture.output(fish_pd, file = "../output/01_output_fish_pd_sr.txt") - UNCOMMENT TO SAVE FILE
+
+# Visualize PD and SR by lake 
+df_fish_pd <- fish_pd %>% 
+  rownames_to_column("lake")
+
+barplot_fish_pd_site <- ggplot(df_fish_pd, aes(x = lake, y = PD)) +
+  geom_segment(aes(x = lake, xend = lake, y = 0, yend = PD), linewidth = 1.2, color = "#3f5a51") +
+  geom_point(size = 6, color = "#7FC0BA") +
+  theme_minimal() +
+  ylab("Phylogenetic Distance") + 
+  xlab("Lake") + 
+  ggtitle("A: Phylogenetic Distance by Lake") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  coord_flip() + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 0.5))
+
+barplot_fish_sr_site <- ggplot(df_fish_pd, aes(x = lake, y = SR)) + 
+  geom_segment(aes(x = lake, xend = lake,y = 0, yend = SR), linewidth = 1.2, color = "#3f5a51") + 
+  geom_point(size = 6, color = "#7FC0BA") +
+  theme_minimal() +
+  ylab("Species Richness") + 
+  xlab("Lake") + 
+  ggtitle("B: Species Richness by Lake") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  coord_flip() + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 0.5))
+
+plot_fish_pd_sr <- ggplot(df_fish_pd, aes(x = PD, y = SR, label = lake)) +
+  geom_point(size = 8, color = "#3f5a51") +
+  geom_text_repel(size = 4, # auto adjusts the labels
+                  box.padding = 0.6,   # creates space between the data point and the label
+                  point.padding = 0.4,
+                  max.overlaps = Inf, 
+                  segment.color = NA) +
+  xlab("Phylogenetic Diversity (PD)") +
+  ylab("Species Richness (SR)") +
+  ggtitle("C: Phylogenetic Distance vs. Species Richness") + 
+  theme_minimal() + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+# combine all visuals into 3-panel plot
+combined_plots_pd_sr_site <- (barplot_fish_pd_site + barplot_fish_sr_site) / plot_fish_pd_sr
+
+# ggsave(filename = "04_fig_combined_pd_sr_site.png", plot = combined_plots_pd_sr_site, path = "../fig", - UNCOMMENT TO SAVE FILE
+#        width = 14, height = 8,dpi = 300) - UNCOMMENT TO SAVE FILE
+
+# rm(df_fish_pd, barplot_fish_pd_site, barplot_fish_sr_site, plot_fish_pd_sr, combined_plots_pd_sr_site)
 
 # Create a phylogenetic distance matrix
 fish_dist <- cophenetic.phylo(tree_fish)
 head(fish_dist)
 
+# Investigate distance matrix
+which(fish_dist == 0, arr.ind = TRUE) # check to make sure that the only species with 0 distance are the ones mapped to themselves
+
+
 # Visualize the distance matrix
-png("../fig/04_fig_heatmap_fish_phylo_dist.png", width = 14, height = 14, res = 300, unit = "in")
+# png("../fig/05_fig_heatmap_fish_phylo_dist.png", width = 14, height = 14, res = 300, units = "in") - UNCOMMENT TO SAVE FILE
 heatmap(as.matrix(fish_dist), symm = TRUE, col = viridis::viridis(100), margins = c(12, 12))
-dev.off()
+# dev.off() - UNCOMMENT TO SAVE FILE
+
 
 #### _ Nearest Taxon Index (NTI) Calculation and Visualization --------
 # Using Nearest taxon index (NTI) as a measure for phylogenetic structure of communities
@@ -278,14 +340,14 @@ dev.off()
 fish_ses_mntd <- ses.mntd(comm_matrix_fish, fish_dist, null.model = "taxa.labels", abundance.weighted = FALSE, runs = 100)
 head(fish_ses_mntd)
 
-capture.output(fish_ses_mntd, file = "../output/01_output_fish_ses_mntd.txt")
+# capture.output(fish_ses_mntd, file = "../output/02_output_fish_ses_mntd.txt") - UNCOMMENT TO SAVE FILE
 
 # Calculate NTI (z-score from obs-mean/std)
 fish_nti <- as.matrix(-1 * ((fish_ses_mntd[,2] - fish_ses_mntd[,3]) / fish_ses_mntd[,4]))
 rownames(fish_nti) <- row.names(fish_ses_mntd)
 colnames(fish_nti) <- "NTI"
 
-capture.output(fish_nti, file = "../output/02_output_fish_nti.txt")
+# capture.output(fish_nti, file = "../output/03_output_fish_nti.txt") - UNCOMMENT TO SAVE FILE
 
 head(fish_nti)
 
@@ -309,6 +371,6 @@ lake_cluster_disperse <- ggplot(fish_nti, aes(x = lake, y = NTI, fill = pattern)
   labs(fill = NULL) +
   theme_minimal()
 
-ggsave(filename = "05_fig_lake_cluster_disperse.png", plot = lake_cluster_disperse, path = "../fig/")
+# ggsave(filename = "06_fig_lake_cluster_disperse.png", plot = lake_cluster_disperse, path = "../fig/") - UNCOMMENT TO SAVE FILE
 
-rm(lake_cluster_disperse)
+# rm(lake_cluster_disperse)

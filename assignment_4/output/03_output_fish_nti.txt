@@ -1,0 +1,6 @@
+                NTI
+superior -0.6297357
+michigan -1.0934511
+huron    -1.2740620
+erie     -1.1258105
+ontario   0.1054303

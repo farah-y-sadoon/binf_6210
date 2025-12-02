@@ -1,0 +1,6 @@
+               PD  SR
+superior 15.79944  99
+michigan 20.76601 148
+huron    19.54879 134
+erie     20.29568 143
+ontario  19.18150 137
