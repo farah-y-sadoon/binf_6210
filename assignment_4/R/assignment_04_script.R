@@ -16,7 +16,10 @@ library(janitor)
 library(picante)
 library(ape)
 library(httr)
+#library(devtools) - for installing phylotools
+#install_github("helixcn/phylotools", build_vignettes = TRUE) - to install phylotools
 library(phylotools)
+# BiocManager::install("ggtree") - to install ggtree
 library(ggtree)
 library(ggrepel)
 library(patchwork)
@@ -74,6 +77,7 @@ print(df_fish2$species)
 # write_tsv(df_chordata, "../data/df_chordata.tsv")
 
 df_chordata <- read_tsv("../data/df_chordata.tsv")
+# print(problems(df_chordata), n = 100) - run this diagnostic to see if there's anything wrong with the rows, as a warning message pops up
 
 # Inspect chordate data frame
 class(df_chordata)
@@ -89,7 +93,7 @@ df_chordata2 <- df_chordata %>%
   dplyr::select(species_name, class_name, markercode, nucleotides) %>% 
   filter(!is.na(species_name)) %>% 
   filter(markercode == "COI-5P") %>% 
-  rename(species_name = "species", class_name = "class") %>% # this needs to match the df_fish2 data frame for the left join
+  dplyr::rename(species = species_name, class = class_name) %>% # this needs to match the df_fish2 data frame for the left join
   distinct() %>% 
   clean_names()
 
@@ -229,6 +233,8 @@ tree_fish$tip.label <- gsub("_", " ", tree_fish$tip.label)
 print(ggtree(tree_fish, layout = "fan") +
   geom_tiplab(size = 2))
 # dev.off() - UNCOMMENT TO SAVE FILE
+
+# Warning messages during tree plotting are due to deprecated functions in ggtree/ggplot2 and do not impact the resulting tree.
 
 ### _ Community Structure Analysis --------
 # Create community matrix for picante() 
